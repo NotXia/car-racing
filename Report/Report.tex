@@ -117,7 +117,7 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
     \hline
     Campionato & Numero definito di gare con classifica & - & Gare \\
     \hline
-    Gare & Numero definito di giri & - & Piste, giri, piloti, sponsor \\
+    Gare & Numero definito di giri & Competizione & Piste, giri, piloti, sponsor \\
     \hline
     Giri & Percorrenza intera di una pista & - & Pilota, gara \\
     \hline
@@ -157,40 +157,64 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
     \item Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno)
     \item Visualizzare gli sponsor di una gara (1 volta per gara)
     \item Visualizzare il pilota con il tempo migliora su una data pista (1 volta per gara)
-    \item Visualizzare i poloti e la scuderia con cui gareggiano per una data gara (1 volta per gara)
+    \item Visualizzare i piloti e la scuderia con cui gareggiano per una data gara (1 volta per gara)
     \item Visualizzare la classifica (finale o temporanea) di una data gara (~60 volte per gara)
 \end{enumerate}
 
 \section{Progettazione concettuale}
 
-\subsection{Definizioni delle entità generali}
-
+\subsection{Definizioni delle entità generalizzabili}
+\subsubsection{Definizioni delle persone}
+Come persone, sono state identificate le entità supervisori, piloti e meccanici. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{../er/gare_persone.pdf}
 \end{figure}
 
+\subsubsection{Definizioni delle aziende}
+Come aziende, sono state identificate le entità scuderia e sponsor. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{../er/gare_aziende.pdf}
 \end{figure}
 
+\subsection{Definizioni delle macro-argomenti}
+\subsubsection{Definizioni delle scuderie}
+Riguardo le scuderie, sono state identificate le entità: scuderia, contratto, auto, controllo. Oltre a pilota, meccanico, supervisore, sponsor.
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare_scuderie.pdf}
 \end{figure}
 
+\subsubsection{Definizioni delle competizioni}
+Per il concetto di competizione sono state identificate le entità: gara, pista, giro, infrazione, pit stop. Oltre a pilota, meccanico, sponsor.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15.5cm]{../er/gare_gara.pdf}
+    \includegraphics[width=15.5cm]{../er/gare_gara.pdf} % TODO CORREGGERE ENTITA' MECCANICI->MECCANICO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 \end{figure}
 
+\subsection{Schema finale}
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare.pdf}
 \end{figure}
 
 \subsection{Identificazione delle entità e relazioni}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{
+    |>{\hsize=1.0\hsize}X|% 10% of 4\hsize 
+    >{\hsize=1.5\hsize}X|% 30% of 4\hsize
+    >{\hsize=0.8\hsize}X|% 30% of 4\hsize 
+    >{\hsize=0.7\hsize}X|% 30% of 4\hsize
+       % sum=4.0\hsize for 4 columns
+    }
+    \hline
+    \textbf{Nome entità} & \textbf{Descrizione} & \textbf{Attributi} & \textbf{Identificatore} \\
+    \hline
+\end{tabularx}
+\end{center}
+
 \subsection{Un primo scheletro dello schema}
 \subsection{Sviluppo delle componenti dello scheletro}
 \subsection{Unione delle componenti nello schema finale ridotto}
