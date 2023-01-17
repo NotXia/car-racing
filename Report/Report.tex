@@ -9,7 +9,7 @@
 \usepackage{cancel}
 \usepackage{float}
 \usepackage{mathtools}
-\usepackage[margin=3cm]{geometry}
+\usepackage[margin=2cm]{geometry}
 % \setcounter{secnumdepth}{0}
 \usepackage{hyperref}
 \hypersetup{
@@ -40,7 +40,7 @@
         \vspace*{1.5cm}
             
         \Huge
-        \textbf{Campionato di gare automobilistiche}
+        \textbf{Campionato di\\gare automobilistiche}
             
         \vspace{0.3cm}
         \LARGE
@@ -145,7 +145,8 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
     \hline
     Contratto & Accordo stipulato tra un pilota e una scuderia per gareggiare in un campionato & - & Pilota, scuderia \\
     \hline
-\end{tabularx}    
+\end{tabularx}
+
 \subsection{Eliminazione delle ambiguità presenti}
 \subsection{Strutturazione dei requisiti}
 \subsection{Specifica operazioni}
@@ -162,6 +163,7 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
 \end{enumerate}
 
 \section{Progettazione concettuale}
+\subsection{Identificazione delle entità e relazioni}
 
 \subsection{Definizioni delle entità generalizzabili}
 \subsubsection{Definizioni delle persone}
@@ -199,30 +201,326 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
     \includegraphics[width=15.5cm]{../er/gare.pdf}
 \end{figure}
 
-\subsection{Identificazione delle entità e relazioni}
+
+\subsection{Dizionario dei dati}
 
 \begin{center}
-\begin{tabularx}{\linewidth}{
-    |>{\hsize=1.0\hsize}X|% 10% of 4\hsize 
-    >{\hsize=1.5\hsize}X|% 30% of 4\hsize
-    >{\hsize=0.8\hsize}X|% 30% of 4\hsize 
-    >{\hsize=0.7\hsize}X|% 30% of 4\hsize
-       % sum=4.0\hsize for 4 columns
-    }
-    \hline
-    \textbf{Nome entità} & \textbf{Descrizione} & \textbf{Attributi} & \textbf{Identificatore} \\
-    \hline
-\end{tabularx}
+\makebox[0cm]{
+    \begin{tabular}{ |l|p{5.5cm}|p{5cm}|p{4cm}| }
+        \hline
+        \textbf{Nome entità} & \textbf{Descrizione} & \textbf{Attributi} & \textbf{Identificatore} \\
+        
+        \hline
+        Pilota & 
+        Persona che guida un veicolo & 
+        \parbox[t]{\linewidth}{Nome (stringa)\\Cognome (stringa)\\Data di nascita (data)\\Luogo di nascita (stringa)} & 
+        Codice fiscale (stringa) \\
+        
+        \hline
+        Meccanico &
+        Persona che opera su un veicolo & 
+        \parbox[t]{\linewidth}{Nome (stringa)\\Cognome (stringa)\\Data di nascita (data)\\Luogo di nascita (stringa)} & 
+        Codice fiscale (stringa) \\
+
+        \hline
+        Supervisore &
+        Persona che effettua dei controlli di regolarità per conto della società organizzante & 
+        \parbox[t]{\linewidth}{Nome (stringa)\\Cognome (stringa)\\Data di nascita (data)\\Luogo di nascita (stringa)} & 
+        Codice fiscale (stringa) \\
+
+        \hline
+        Scuderia &
+        Azienda che stipula contratti con piloti e crea auto da corsa & 
+        \parbox[t]{\linewidth}{Colore (stringa)\\Nazione (stringa)\\Anno di fondazione (numero)} & 
+        Ragione sociale (stringa) \\
+
+        \hline
+        Sponsor &
+        Azienda che investe in gare e scuderie & 
+        \parbox[t]{\linewidth}{Tipologia (stringa)\\Nazione (stringa)} & 
+        Ragione sociale (stringa) \\
+        
+        \hline
+        Contratto &
+        Documento stipulato tra un pilota e una scuderia & 
+        \parbox[t]{\linewidth}{Data inizio (data)\\Data fine (data)\\Numero pilota (numero)} & 
+        Numero contratto (stringa) \\
+
+        \hline
+        Auto &
+        Autovettura ad elevata velocità di fabbricazione di una scuderia guidata da un pilota &
+        \parbox[t]{\linewidth}{Potenza (numero)\\Velocità massima (numero)} & 
+        Id (stringa) \\
+
+        \hline
+        Controllo &
+        Verifica della regolarità di un auto effettuata da un supervisore & 
+        \parbox[t]{\linewidth}{Esito (Booleano)} & 
+        \parbox[t]{\linewidth}{Data e ora (data)\\Id [Auto] } \\
+
+        \hline
+        Gara &
+        Competizione dove 20 piloti gareggiano su una pista un numero di giri prestabilito & 
+        \parbox[t]{\linewidth}{Data (data)\\Numero giri (numero)} & 
+        Nome (stringa) \\
+
+        \hline
+        Pista &
+        Località asfaltata adatta a ospitare gare ad alta velocità & 
+        \parbox[t]{\linewidth}{Nazione (stringa)\\Città (stringa)\\Lunghezza (numero)\\Numero posti (numero)} & 
+        Nome (stringa) \\
+
+        \hline
+        Giro &
+        Singola percorrenza completa di pista & 
+        \parbox[t]{\linewidth}{Tempo (numero)} & 
+        \parbox[t]{\linewidth}{Numero (numero)\\Nome [Gara]\\Codice fiscale [Pilota]} \\ 
+
+        \hline
+        Infrazione &
+        Evento irregolare durante una gara & 
+        \parbox[t]{\linewidth}{Descrizione (stringa)} & 
+        Nome (stringa) \\
+
+        \hline
+        Pit stop &
+        Fase di gara dove l'auto sosta in una specifica area di pista per permettere ai meccanici di effettuare piccole modifiche & 
+        \parbox[t]{\linewidth}{Tempo operazioni (numero)\\Tempo totale (numero)} & 
+        Chiavi di [Giro] \\
+
+        \hline
+    \end{tabular}
+}
 \end{center}
 
-\subsection{Un primo scheletro dello schema}
-\subsection{Sviluppo delle componenti dello scheletro}
-\subsection{Unione delle componenti nello schema finale ridotto}
-\subsection{Dizionario dei dati}
+\begin{center}
+    \makebox[0cm]{
+        \begin{tabular}{ |l|p{5.5cm}|p{5cm}|p{4cm}| }
+            \hline
+            \textbf{Nome relazione} & \textbf{Descrizione} & \textbf{Entità coinvolte} & \textbf{Attributi} \\
+            
+            \hline
+            Svolge & 
+            Associa la pista su cui si svolge una gara & 
+            \parbox[t]{\linewidth}{Pista (0, N)\\Gara (1, 1)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Promuove & 
+             & 
+            \parbox[t]{\linewidth}{Gara (0, 1)\\Sponsor (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Registra & 
+             & 
+            \parbox[t]{\linewidth}{Gara (1, N)\\Giro (1, 1)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Partecipa & 
+             & 
+            \parbox[t]{\linewidth}{Gara (20, 20)\\Pilota (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Investe & 
+             & 
+            \parbox[t]{\linewidth}{Sponsor (0, N)\\Scuderia (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Chiamata & 
+             & 
+            \parbox[t]{\linewidth}{Pit stop (1, 1)\\Giro (0, 1)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Effettua & 
+             & 
+            \parbox[t]{\linewidth}{Giro (1, 1)\\Pilota (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Penalizza & 
+             & 
+            \parbox[t]{\linewidth}{Giro (0, N)\\Penalità (0, N)} & 
+            \parbox[t]{\linewidth}{Penalità (numero)} \\
+
+            \hline
+            Opera & 
+             & 
+            \parbox[t]{\linewidth}{Pit stop (1, N)\\Meccanico (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Stipula & 
+             & 
+            \parbox[t]{\linewidth}{Pilota (0, N)\\Contratto (1, 1)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Assegna & 
+             & 
+            \parbox[t]{\linewidth}{Contratto (1, 1)\\Auto (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Emette & 
+             & 
+            \parbox[t]{\linewidth}{Contratto (1, 1)\\Scuderia (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Lavora & 
+             & 
+            \parbox[t]{\linewidth}{Meccanico (1, 1)\\Scuderia (1, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
+            Accerta & 
+             & 
+            \parbox[t]{\linewidth}{Auto (1, N)\\Controllo (1, 1)} & 
+            \parbox[t]{\linewidth}{-} \\
+            
+            \hline
+            Verifica & 
+             & 
+            \parbox[t]{\linewidth}{Controllo (1,1)\\Supervisore (0, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+            
+            \hline
+        \end{tabular}
+    }
+\end{center}
+
 \subsection{Regole aziendali}
+\subsubsection{Regole di vincolo}
+\begin{enumerate}[label={RV \arabic*}, leftmargin=4em]
+    \item first
+    \item second
+\end{enumerate}
+
+\subsubsection{Regole di derivazione}
+\begin{enumerate}[label={RD \arabic*}, leftmargin=4em]
+    \item first
+    \item second
+\end{enumerate}
 
 \section{Progettazione logica}
-\subsection{Tavole dei volumi e delle operazioni}
+\subsection{Tavole dei volumi}
+\begin{center}
+    \begin{tabular}{ |l|l|l| }
+        \hline
+        \textbf{Concetto} & \textbf{Tipo} & \textbf{Volume} \\
+        
+        \hline
+        Pilota & Entità & 30 \\
+        \hline
+        Meccanico & Entità & 150 \\
+        \hline
+        Supervisore & Entità & 15 \\
+        \hline
+        Scuderia & Entità & 10 \\
+        \hline
+        Sponsor & Entità & 50 \\
+        \hline
+        Contratto & Entità & 1400 \\
+        \hline
+        Auto & Entità & 20 \\
+        \hline
+        Controllo & Entità & 55000 \\ % (73 anni di F1 * 20 piloti per gara * 2 (un controllo a inizio gara e uno alla fine) * 20 gare in media per stagione)
+        \hline
+        Gara & Entità & 1100 \\
+        \hline
+        Pista & Entità & 50 \\
+        \hline
+        Giro & Entità & 70000 \\ % (73 anni di F1 * 20 gare in media per stagione * 50 giri in media per gara)
+        \hline
+        Infrazione & Entità & 20 \\
+        \hline
+        Pit stop & Entità & 20000 \\
+        \hline
+    \end{tabular}
+        \quad
+    \begin{tabular}{ |l|l|l| }
+        \hline
+        \textbf{Concetto} & \textbf{Tipo} & \textbf{Volume} \\
+
+        \hline
+        Svolge & Relazione & 1100 \\
+        \hline
+        Promuove & Relazione & 700 \\
+        \hline
+        Registra & Relazione & 70000 \\
+        \hline
+        Partecipa & Relazione & 22000 \\
+        \hline
+        Investe & Relazione & 300 \\
+        \hline
+        Chiamata & Relazione & 20000 \\
+        \hline
+        Effettua & Relazione & 70000 \\
+        \hline
+        Penalizza & Relazione & 8000 \\
+        \hline
+        Opera & Relazione & 300000 \\ % (volume meccanici 15 * volume pit stop 20000)
+        \hline
+        Stipula & Relazione & 1400 \\
+        \hline
+        Assegna & Relazione & 1400 \\
+        \hline
+        Emette & Relazione & 1400 \\
+        \hline
+        Lavora & Relazione & 150 \\
+        \hline
+        Accerta & Relazione & 55000 \\
+        \hline
+        Verifica & Relazione & 55000 \\
+        \hline
+    \end{tabular}
+\end{center}
+\subsection{Tavola delle operazioni}
+\begin{center}
+    \begin{tabular}{ |l|l| }
+        \hline
+        \textbf{Operazione} & \textbf{Frequenza} \\
+
+        \hline
+        1 & 1 volta all'anno \\
+        \hline
+        2 & 1 volta all'anno \\
+        \hline
+        3 & 1 volta all'anno \\
+        \hline
+        4 & 1 volta all'anno \\
+        \hline
+        5 & 1 volta all'anno \\
+        \hline
+        6 & 1 volta all'anno \\
+        \hline
+        7 & 1 volta all'anno \\
+        \hline
+        8 & 1 volta all'anno \\
+        \hline
+        9 & 1 volta all'anno \\
+        \hline
+        10 & 1 volta all'anno \\
+        \hline
+        11 & 1 volta all'anno \\
+        \hline
+        12 & 1 volta all'anno \\
+        \hline
+        13 & 1 volta all'anno \\
+        \hline
+        14 & 1 volta all'anno \\
+        \hline
+        15 & 1 volta all'anno \\
+        \hline
+    \end{tabular}
+\end{center}
+
+
 \subsection{Ristrutturazione dello schema concettuale}
 \subsection{Normalizzazione}
 \subsection{Traduzione verso il modello relazionale}
