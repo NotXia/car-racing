@@ -153,13 +153,16 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
 \begin{enumerate}
     \item Inserire una nuova scuderia (in media 1 volta ogni cinque anni)
     \item Inserire una nuova gara (in media 1 volta all'anno)
-    \item Inserire il tempo pit stop (~20 volte per gara)
-    \item Inserire il tempo di un giro del pilota sulla pista (~1200 volte per gara)
+    \item Inserire il tempo pit stop ($\sim$20 volte per gara)
+    \item Inserire il tempo di un giro del pilota sulla pista ($\sim$1000 volte per gara)
     \item Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno)
     \item Visualizzare gli sponsor di una gara (1 volta per gara)
     \item Visualizzare il pilota con il tempo migliora su una data pista (1 volta per gara)
     \item Visualizzare i piloti e la scuderia con cui gareggiano per una data gara (1 volta per gara)
-    \item Visualizzare la classifica (finale o temporanea) di una data gara (~60 volte per gara)
+    \item Visualizzare la classifica (finale o temporanea) di una data gara ($\sim$50 volte per gara)
+    \item Visualizzare il pilota con il maggior numero di vittorie (1 volta per gara)
+    \item Visualizzare la scuderia con il maggior numero di vittorie (1 volta per gara)
+    \item Visualizzare lo sponsor più presente (1 volta all'anno)
 \end{enumerate}
 
 \section{Progettazione concettuale}
@@ -480,6 +483,7 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
         \hline
     \end{tabular}
 \end{center}
+
 \subsection{Tavola delle operazioni}
 \begin{center}
     \begin{tabular}{ |l|l| }
@@ -487,39 +491,32 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
         \textbf{Operazione} & \textbf{Frequenza} \\
 
         \hline
-        1 & 1 volta all'anno \\
+        1 & 1 volta ogni cinque anni \\
         \hline
         2 & 1 volta all'anno \\
         \hline
-        3 & 1 volta all'anno \\
+        3 & $\sim$20 volte per gara \\
         \hline
-        4 & 1 volta all'anno \\
+        4 & $\sim$1000 volte per gara \\
         \hline
-        5 & 1 volta all'anno \\
+        5 & Poche volte ogni anno \\
         \hline
-        6 & 1 volta all'anno \\
+        6 & 1 volta per gara \\
         \hline
-        7 & 1 volta all'anno \\
+        7 & 1 volta per gara \\
         \hline
-        8 & 1 volta all'anno \\
+        8 & 1 volta per gara \\
         \hline
-        9 & 1 volta all'anno \\
+        9 & $\sim$50 volte per gara \\
         \hline
-        10 & 1 volta all'anno \\
+        10 & 1 volta per gara \\
         \hline
-        11 & 1 volta all'anno \\
+        11 & 1 volta per gara \\
         \hline
         12 & 1 volta all'anno \\
         \hline
-        13 & 1 volta all'anno \\
-        \hline
-        14 & 1 volta all'anno \\
-        \hline
-        15 & 1 volta all'anno \\
-        \hline
     \end{tabular}
 \end{center}
-
 
 \subsection{Ristrutturazione dello schema concettuale}
 \subsection{Normalizzazione}
