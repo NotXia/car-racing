@@ -163,6 +163,7 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
     \item Visualizzare il pilota con il maggior numero di vittorie (1 volta per gara)
     \item Visualizzare la scuderia con il maggior numero di vittorie (1 volta per gara)
     \item Visualizzare lo sponsor più presente (1 volta all'anno)
+    \item Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data (poche volte all'anno)
 \end{enumerate}
 
 \section{Progettazione concettuale}
@@ -196,12 +197,14 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare_gara.pdf} % TODO CORREGGERE ENTITA' MECCANICI->MECCANICO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-\end{figure}
+\end{figure}                                            % I MECCANICI HANNO UN RUOLOOOOOOOOOOOO
 
 \subsection{Schema finale}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15.5cm]{../er/gare.pdf}
+    \makebox[0cm]{
+        \includegraphics[width=18cm]{../er/gare.pdf}
+    }
 \end{figure}
 
 
@@ -222,7 +225,7 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
         \hline
         Meccanico &
         Persona che opera su un veicolo & 
-        \parbox[t]{\linewidth}{Nome (stringa)\\Cognome (stringa)\\Data di nascita (data)\\Luogo di nascita (stringa)} & 
+        \parbox[t]{\linewidth}{Nome (stringa)\\Cognome (stringa)\\Data di nascita (data)\\Luogo di nascita (stringa)\\Ruolo (stringa)} & 
         Codice fiscale (stringa) \\
 
         \hline
@@ -400,17 +403,26 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
 \subsection{Regole aziendali}
 \subsubsection{Regole di vincolo}
 \begin{enumerate}[label={RV \arabic*}, leftmargin=4em]
-    \item first
-    \item second
+    \item Il numero di giri di una gara deve essere $>0$.
+    \item Data una gara, il numero di giri effettuato da un pilota, deve essere al più il numero di giri della gara.\\
+          Il numero di un giro deve essere quindi compreso tra $[1, \text{numero di giri della gara}]$.
+    \item Il numero di posti e la lunghezza di una pista devono essere $>0$. 
+    \item Il tempo di un giro deve essere essere $>0$. 
+    \item Il tempo delle operazioni e tempo totale dei pit stop devono essere $>0$.
+    \item Il tempo della penalità deve essere $>0$.
+    \item La potenza e la velocità massima di un'auto deve essere $>0$.
+    \item In un dato istante, un pilota può avere attivo un solo contratto con una scuderia.
+    \item La data di inizio di un contratto deve essere antecedente alla data di fine.
+    \item I meccanici che operano ad un pit stop devono appartenere alla stessa scuderia del pilota che effettua il giro.
 \end{enumerate}
 
-\subsubsection{Regole di derivazione}
-\begin{enumerate}[label={RD \arabic*}, leftmargin=4em]
-    \item first
-    \item second
-\end{enumerate}
+% \subsubsection{Regole di derivazione}
+% \begin{enumerate}[label={RD \arabic*}, leftmargin=4em]
+%     \item 
+% \end{enumerate}
 
 \section{Progettazione logica}
+% TODO CREARE ID IN GIRO AL POSTO DELLA CHIAVE GIGANTE
 \subsection{Tavole dei volumi}
 \begin{center}
     \begin{tabular}{ |l|l|l| }
@@ -515,16 +527,134 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
         \hline
         12 & 1 volta all'anno \\
         \hline
+        13 & Poche volte all'anno \\
+        \hline
     \end{tabular}
 \end{center}
 
 \subsection{Ristrutturazione dello schema concettuale}
 \subsection{Normalizzazione}
 \subsection{Traduzione verso il modello relazionale}
+\begin{center}
+    \makebox[0cm]{
+        \def\arraystretch{1.2}%
+        \begin{tabular}{ |l|l| }
+            \hline
+            \textbf{Entità - Relazione} & \textbf{Traduzione} \\
+
+            \hline
+            Pilota & Pilota(\underline{codice\_fiscale}, nome, cognome, data\_nascita, luogo\_nascita) \\
+            \hline
+            Meccanico & \makecell[l]{Meccanico(\underline{codice\_fiscale}, nome, cognome,\\data\_nascita, luogo\_nascita, ruolo, scuderia)} \\
+            \hline
+            Supervisore & Supervisore(\underline{codice\_fiscale}, nome, cognome, data\_nascita, luogo\_nascita) \\
+            \hline
+            Scuderia & Scuderia(\underline{ragione\_sociale}, colore, nazione, anno\_fondazione) \\
+            \hline
+            Sponsor & Sponsor(\underline{ragione\_sociale}, tipologia, nazione) \\
+            \hline
+            Contratto & Contratto(\underline{numero}, data\_inizio, data\_fine, numero\_pilota, pilota, scuderia, auto) \\
+            \hline
+            Auto & Auto(\underline{id}, potenza, max\_velocita) \\
+            \hline
+            Controllo & Controllo(\underline{auto}, \underline{data\_ora}, esito, supervisore) \\
+            \hline
+            Gara & Gara(\underline{nome}, data, num\_giri, sponsor, pista) \\
+            \hline
+            Pista & Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti) \\
+            \hline
+            Giro & Giro(\underline{id}, numero, tempo, gara, pilota) \\
+            \hline
+            Infrazione & Infrazione(\underline{nome}, descrizione) \\
+            \hline
+            Pit stop & Pitstop(\underline{giro}, tempo\_operazione, tempo\_totale) \\
+            \hline
+            Svolge & Accorpato in Gara \\
+            \hline
+            Promuove & Accorpato in Gara \\
+            \hline
+            Registra & Accorpato in Giro \\
+            \hline
+            Partecipa & Partecipa(\underline{gara}, \underline{pilota}) \\
+            \hline
+            Investe & Investe(\underline{sponsor}, \underline{scuderia}) \\
+            \hline
+            Chiamata & Accorpata in Pit Stop \\
+            \hline
+            Effettua & Accorpata in Giro \\
+            \hline
+            Penalizza & Penalizza(\underline{giro}, \underline{infrazione}, penalita) \\
+            \hline
+            Opera & Opera(\underline{pitstop}, \underline{meccanico}) \\
+            \hline
+            Stipula & Accorpato in Contratto \\
+            \hline
+            Assegna & Accorpato in Contratto \\
+            \hline
+            Emette & Accorpato in Contratto \\
+            \hline
+            Lavora & Accorpato in Meccanico \\
+            \hline
+            Accerta & Accorpato in Controllo \\
+            \hline
+            Verifica & Accorpato in Controllo \\
+            \hline
+        \end{tabular}
+    }
+\end{center}
+
+\begin{center}
+    \makebox[0cm]{
+        \def\arraystretch{1.2}%
+        \begin{tabular}{ |l|l| }
+            \hline
+            \textbf{Entità - Relazione} & \textbf{Traduzione} \\
+
+            \hline
+            Pilota(\underline{codice\_fiscale}, nome, cognome, data\_nascita, luogo\_nascita) & \makecell[l]{-} \\
+            \hline
+            \makecell[l]{Meccanico(\underline{codice\_fiscale}, nome, cognome,\\data\_nascita, luogo\_nascita, ruolo, scuderia)} & \makecell[l]{scuderia $\rightarrow$ Scuderia.ragione\_sociale} \\
+            \hline
+            \makecell[l]{Supervisore(\underline{codice\_fiscale}, nome, cognome,\\data\_nascita, luogo\_nascita)} & \makecell[l]{-} \\
+            \hline
+            Scuderia(\underline{ragione\_sociale}, colore, nazione, anno\_fondazione) & \makecell[l]{-} \\
+            \hline
+            Sponsor(\underline{ragione\_sociale}, tipologia, nazione) & \makecell[l]{-} \\
+            \hline
+            \makecell[l]{Contratto(\underline{numero}, data\_inizio, data\_fine,\\numero\_pilota, pilota, scuderia, auto)} & \makecell[l]{pilota $\rightarrow$ Pilota.codice\_fiscale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale \\ auto $\rightarrow$ Auto.id} \\
+            \hline
+            Auto(\underline{id}, potenza, max\_velocita) & \makecell[l]{-} \\
+            \hline
+            Controllo(\underline{auto}, \underline{data\_ora}, esito, supervisore) & \makecell[l]{supervisore $\rightarrow$ Supervisore.codice\_fiscale} \\
+            \hline
+            Gara(\underline{nome}, data, num\_giri, sponsor, pista) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ pista $\rightarrow$ Pista.nome} \\
+            \hline
+            Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti) & \makecell[l]{-} \\
+            \hline
+            Giro(\underline{id}, numero, tempo, gara, pilota) & \makecell[l]{gara $\rightarrow$ Gara.nome \\ pilota $\rightarrow$ Pilota.codice\_fiscale} \\
+            \hline
+            Infrazione(\underline{nome}, descrizione) & \makecell[l]{-} \\
+            \hline
+            Pitstop(\underline{giro}, tempo\_operazione, tempo\_totale) & \makecell[l]{giro $\rightarrow$ Giro.id} \\
+            \hline
+            Partecipa(\underline{gara}, \underline{pilota}) & \makecell[l]{gara $\rightarrow$ Gara.nome \\ pilota $\rightarrow$ Pilota.codice\_fiscale} \\
+            \hline
+            Investe(\underline{sponsor}, \underline{scuderia}) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale } \\
+            \hline
+            Penalizza(\underline{giro}, \underline{infrazione}, penalita) & \makecell[l]{giro $\rightarrow$ Giro.id \\ infrazione $\rightarrow$ Infrazione.nome} \\
+            \hline
+            Opera(\underline{pitstop}, \underline{meccanico}) & \makecell[l]{pitstop $\rightarrow$ Pitstop.giro \\ meccanico $\rightarrow$ Meccanico.codice\_fiscale} \\
+            \hline
+        \end{tabular}
+    }
+\end{center}
+
+
 
 \section{Codifica SQL}
 \subsection{Definizione dello schema}
 \subsection{Codifica delle operazioni}
+
 
 \section{Testing}
 
