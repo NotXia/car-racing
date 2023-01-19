@@ -313,85 +313,85 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
 
             \hline
             Promuove & 
-             & 
+            Associa l'eventuale sponsor che promuove una gara & 
             \parbox[t]{\linewidth}{Gara (0, 1)\\Sponsor (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Registra & 
-             & 
+            Associa un giro effettuato in una gara & 
             \parbox[t]{\linewidth}{Gara (1, N)\\Giro (1, 1)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Partecipa & 
-             & 
+            Associa un pilota che partecipa ad una gara & 
             \parbox[t]{\linewidth}{Gara (20, 20)\\Pilota (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Investe & 
-             & 
+            Associa l'eventuale sponsor che investe in una o più scuderie & 
             \parbox[t]{\linewidth}{Sponsor (0, N)\\Scuderia (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Chiamata & 
-             & 
+            Associa il giro in cui il pilota viene chiamato per il pit stop & 
             \parbox[t]{\linewidth}{Pit stop (1, 1)\\Giro (0, 1)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Effettua & 
-             & 
+            Associa il giro che viene effettuato dal pilota & 
             \parbox[t]{\linewidth}{Giro (1, 1)\\Pilota (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Penalizza & 
-             & 
+            Associa la penalità al giro in cui viene commessa l'infrazione & 
             \parbox[t]{\linewidth}{Giro (0, N)\\Penalità (0, N)} & 
             \parbox[t]{\linewidth}{Penalità (numero)} \\
 
             \hline
             Opera & 
-             & 
+            Associa i meccanici che lavorano durante la sosta al pit stop & 
             \parbox[t]{\linewidth}{Pit stop (1, N)\\Meccanico (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Stipula & 
-             & 
+            Associa il contratto firmato da un pilota & 
             \parbox[t]{\linewidth}{Pilota (0, N)\\Contratto (1, 1)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Assegna & 
-             & 
+            Associa l'auto assegnata nel contratto & 
             \parbox[t]{\linewidth}{Contratto (1, 1)\\Auto (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Emette & 
-             & 
+            Associa la scuderia ai contratti che emette & 
             \parbox[t]{\linewidth}{Contratto (1, 1)\\Scuderia (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Lavora & 
-             & 
+            Associa un meccanico a una scuderia per la quale lavora & 
             \parbox[t]{\linewidth}{Meccanico (1, 1)\\Scuderia (1, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Accerta & 
-             & 
+            Associa un controllo che viene effettuato su un'auto & 
             \parbox[t]{\linewidth}{Auto (1, N)\\Controllo (1, 1)} & 
             \parbox[t]{\linewidth}{-} \\
             
             \hline
             Verifica & 
-             & 
+            Associa un controllo che viene effettuato da un supervisore & 
             \parbox[t]{\linewidth}{Controllo (1,1)\\Supervisore (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
             
