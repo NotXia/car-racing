@@ -535,6 +535,7 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
 \subsection{Ristrutturazione dello schema concettuale}
 \subsection{Normalizzazione}
 \subsection{Traduzione verso il modello relazionale}
+% CAMBIARE AUTO IN VEICOLO PERCHE' PAROLA RISERVATA
 \begin{center}
     \makebox[0cm]{
         \def\arraystretch{1.2}%
@@ -621,13 +622,13 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
             \hline
             Sponsor(\underline{ragione\_sociale}, tipologia, nazione) & \makecell[l]{-} \\
             \hline
-            \makecell[l]{Contratto(\underline{numero}, data\_inizio, data\_fine,\\numero\_pilota, pilota, scuderia, auto)} & \makecell[l]{pilota $\rightarrow$ Pilota.codice\_fiscale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale \\ auto $\rightarrow$ Auto.id} \\
+            \makecell[l]{Contratto(\underline{numero}, data\_inizio, data\_fine,\\numero\_pilota, pilota, scuderia, veicolo)} & \makecell[l]{pilota $\rightarrow$ Pilota.codice\_fiscale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale \\ auto $\rightarrow$ Auto.id} \\
             \hline
-            Auto(\underline{id}, potenza, max\_velocita) & \makecell[l]{-} \\
+            Veicolo(\underline{id}, potenza, max\_velocita) & \makecell[l]{-} \\
             \hline
-            Controllo(\underline{auto}, \underline{data\_ora}, esito, supervisore) & \makecell[l]{supervisore $\rightarrow$ Supervisore.codice\_fiscale} \\
+            Controllo(\underline{veicolo}, \underline{data\_ora}, esito, supervisore) & \makecell[l]{veicolo $\rightarrow$ Veicolo.id\\supervisore $\rightarrow$ Supervisore.codice\_fiscale} \\
             \hline
-            Gara(\underline{nome}, data, num\_giri, sponsor, pista) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ pista $\rightarrow$ Pista.nome} \\
+            Gara(\underline{nome}, data\_ore, num\_giri, sponsor, pista) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ pista $\rightarrow$ Pista.nome} \\
             \hline
             Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti) & \makecell[l]{-} \\
             \hline
