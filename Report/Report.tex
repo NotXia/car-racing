@@ -117,31 +117,31 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
     \hline
     Campionato & Numero definito di gare con classifica & - & Gare \\
     \hline
-    Gare & Numero definito di giri & Competizione & Piste, giri, piloti, sponsor \\
+    Gare & Competizione in cui partecipa un numero fissato di piloti che effettuano un numero definito di giri di pista sul proprio veicolo & Competizione & Piste, giri, piloti, sponsor \\
     \hline
-    Giri & Percorrenza intera di una pista & - & Pilota, gara \\
+    Giri & Percorrenza intera di una pista effettuata da un pilota & - & Pilota, gara \\
     \hline
     Piste & Località asfaltata idonea al passaggio di veicoli ad elevata velocità & - & \\
     \hline
     Infrazioni & Eventi irregolari accaduti durante una gara & - & Penalità, giro, pilota \\
     \hline
-    Penalità & Tempo ulteriore assegnato al tempo totale & - & \\
+    Penalità & Tempo ulteriore assegnato come malus al tempo totale & - & \\
     \hline
-    Auto & Autoveicolo ad elevata velocità & Veicolo & Scuderia \\
+    Veicolo & Autoveicolo ad elevata velocità & Auto & Scuderia \\
     \hline
     Piloti & Persona che guida un veicolo ad elevata velocità & - & \\
     \hline
-    Scuderie & Azienda proprietaria di auto & - & Sponsor \\
+    Scuderie & Azienda proprietaria di veicoli & - & Sponsor \\
     \hline
-    Meccanici & Impiegati delle scuderie adibite alla manutenzione dell'auto & - & Scuderia \\
+    Meccanici & Impiegati delle scuderie adibiti alla manutenzione dell'auto & - & Scuderia \\
     \hline
     Supervisori & Impiegati della società organizzante adibiti ai controlli di regolarità & - & \\
     \hline
-    Controlli (di regolarità) & Controlli effettuati dalla società organizzatrice per garantire la regolarità delle auto & Controlli & Supervisore \\
+    Controlli di regolarità & Controlli effettuati dalla società organizzatrice per garantire la regolarità dei veicoli & Controlli & Supervisore \\
     \hline
     Sponsor & Azienda che investe per apparire in gare e/o in scuderie & - & \\
     \hline
-    Pit stop & Fase di un giro dove l'auto sosta in un'apposita area di pista dove i meccanici effettuano operazioni all'auto & - & Giro, pilota, meccanici \\
+    Pit stop & Fase di un giro in cui l'auto sosta in un'apposita area di pista dove i meccanici effettuano operazioni all'auto & - & Giro, pilota, meccanici \\
     \hline
     Contratto & Accordo stipulato tra un pilota e una scuderia per gareggiare in un campionato & - & Pilota, scuderia \\
     \hline
@@ -167,9 +167,18 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
 \end{enumerate}
 
 \section{Progettazione concettuale}
+È stato seguito un approccio bottom-up per definire i macro-argomenti.\\
+Sono quindi state individuate le seguenti categorie:
+\begin{itemize}
+    \item Persone
+    \item Aziende
+    \item Partecipanti: cattura i concetti relativi alle scuderie e ai piloti.
+    \item Competizione: cattura i concetti relativi allo svolgimento della gara.
+\end{itemize}
 \subsection{Identificazione delle entità e relazioni}
 
 \subsection{Definizioni delle entità generalizzabili}
+Le entità generalizzabili sono le persone e le aziende.
 \subsubsection{Definizioni delle persone}
 Come persone, sono state identificate le entità supervisori, piloti e meccanici. 
 \begin{figure}[H]
@@ -184,16 +193,16 @@ Come aziende, sono state identificate le entità scuderia e sponsor.
     \includegraphics[width=10cm]{../er/gare_aziende.pdf}
 \end{figure}
 
-\subsection{Definizioni delle macro-argomenti}
-\subsubsection{Definizioni delle scuderie}
-Riguardo le scuderie, sono state identificate le entità: scuderia, contratto, auto, controllo. Oltre a pilota, meccanico, supervisore, sponsor.
+\subsection{Definizioni dei macro-argomenti}
+\subsubsection{Definizioni dei partecipanti}
+Riguardo i partecipanti, con approccio inside-out, sono state identificate le entità: scuderia, contratto, auto, controllo. Oltre a pilota, meccanico, supervisore, sponsor.
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare_scuderie.pdf}
 \end{figure}
 
 \subsubsection{Definizioni delle competizioni}
-Per il concetto di competizione sono state identificate le entità: gara, pista, giro, infrazione, pit stop. Oltre a pilota, meccanico, sponsor.
+Per il concetto di competizione sono state identificate con approccio inside-out le entità: gara, pista, giro, infrazione, pit stop. Oltre a pilota, meccanico, sponsor.
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare_gara.pdf} % TODO CORREGGERE ENTITA' MECCANICI->MECCANICO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -392,7 +401,7 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
             \hline
             Verifica & 
             Associa un controllo che viene effettuato da un supervisore & 
-            \parbox[t]{\linewidth}{Controllo (1,1)\\Supervisore (0, N)} & 
+            \parbox[t]{\linewidth}{Controllo (1, 1)\\Supervisore (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
             
             \hline
@@ -400,7 +409,7 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
     }
 \end{center}
 
-\subsection{Regole aziendali}
+\subsection{Regole aziendali [RIVEDERE]}
 \subsubsection{Regole di vincolo}
 \begin{enumerate}[label={RV \arabic*}, leftmargin=4em]
     \item Il numero di giri di una gara deve essere $>0$.
@@ -533,6 +542,10 @@ Per il concetto di competizione sono state identificate le entità: gara, pista,
 \end{center}
 
 \subsection{Ristrutturazione dello schema concettuale}
+\subsubsection{Cambio chiave per l'entità Giro}
+La chiave dell'entità Giro comprende l'insieme degli attributi numero del giro, nome della gara e id del pilota. Inoltre, l'entità Pit stop utilizza come chiave l'associazione a Giro.\\
+Tale approccio rende scomodo lavorare con le due entità, per tale ragione è stato deciso di introdurre un identificatore per l'entità Giro che svolge la funzione di chiave.
+
 \subsection{Normalizzazione}
 \subsection{Traduzione verso il modello relazionale}
 % CAMBIARE AUTO IN VEICOLO PERCHE' PAROLA RISERVATA
