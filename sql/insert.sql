@@ -40,7 +40,8 @@ INSERT INTO Meccanico (codice_fiscale, nome, cognome, data_nascita, luogo_nascit
     ('447-09-1101', 'Kendra', 'Beard', '1958-02-15', 'Boynton', 'Capo strategista', 'Ferrari'),
     ('107-12-3042', 'Kimberly', 'Dillon', '1981-09-04', 'New York', 'Meccanico', 'Red Bull'),
     ('606-29-2134', 'Jeanne', 'Allen', '1979-04-27', 'San Diego', 'Meccanico', 'Ferrari'),
-    ('253-47-3122', 'Clara', 'Carlisle', '1968-12-08', 'Atlanta', 'Meccanico', 'Mercedes');
+    ('253-47-3122', 'Clara', 'Carlisle', '1968-12-08', 'Atlanta', 'Meccanico', 'Mercedes'),
+    ('253-47-3123', 'Clarissa', 'Carlisle', '1968-12-08', 'Atlanta', 'Meccanico', 'Mercedes');
 
 INSERT INTO Supervisore (codice_fiscale, nome, cognome, data_nascita, luogo_nascita) VALUES 
     ('290-42-0000', 'Regina', 'Foster', '1977-02-06', 'Westerville'),
@@ -83,7 +84,7 @@ INSERT INTO Sponsor (ragione_sociale, tipologia, nazione) VALUES
 
 INSERT INTO Gara (nome, data_ora, num_giri, sponsor, pista) VALUES 
     ('Gran Premio d''Italia', '2022-09-18 14:00:00', 53, 'Rolex', 'Autodromo Nazionale Monza'),
-    ('Azerbaijan Grand Prix', '2022-04-24 15:00:00', 51, NULL, 'Baku Street Circuit');
+    ('Azerbaijan Grand Prix', '2022-04-24 15:00:00', 5, NULL, 'Baku Street Circuit');
 
 INSERT INTO Partecipa (gara, pilota) VALUES 
     ('Gran Premio d''Italia', 'RSSGRG98B15Z114G'),
@@ -142,22 +143,34 @@ INSERT INTO Investe (scuderia, sponsor) VALUES
     ('Alfa Romeo', 'Pirelli'),
     ('Haas', 'Acer');
 
--- INSERT INTO Giro (numero, tempo, gara, pilota) VALUES 
---     ();
+INSERT INTO Giro (id, numero, tempo, gara, pilota) VALUES 
+    (0, 1, 120000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+    (1, 2, 90000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+    (2, 3, 150000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+    (3, 4, 180000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+    (4, 5, 70000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+    (5, 1, 120000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
+    (6, 2, 150000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
+    (7, 3, 180000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
+    (8, 4, 200000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F');
 
--- INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES 
---     ();
+INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES 
+    (8, 2500, 21000),
+    (7, 2500, 20000);
+
+INSERT INTO Opera (pitstop, meccanico) VALUES 
+    (8, '253-47-3122'),
+    (7, '253-47-3122'),
+    (7, '253-47-3123');
 
 INSERT INTO Infrazione (nome, descrizione) VALUES 
     ('Taglio di curva', 'Quando un pilota taglia la curva'),
     ('Eccessiva velocità in pit lane', 'Quando un pilota guida con velocità eccessiva nella pit lane'),
     ('Eccessiva velocità durante safety car', 'Quando un pilota guida con velocità eccessiva durante il regime di safety car');
 
--- INSERT INTO Penalizza (giro, infrazione, penalita) VALUES 
---     ();
-
--- INSERT INTO Opera (pitstop, meccanico) VALUES 
---     ();
+INSERT INTO Penalizza (id, giro, infrazione, penalita) VALUES 
+    (NULL, 4, 'Taglio di curva', 2000),
+    (NULL, 4, 'Taglio di curva', 3000);
 
 INSERT INTO Contratto (numero, data_inizio, data_fine, numero_pilota, pilota, scuderia, veicolo) VALUES 
     (NULL, '2022-01-01', '2023-12-31', 63, 'RSSGRG98B15Z114G', 'Mercedes',     1),
