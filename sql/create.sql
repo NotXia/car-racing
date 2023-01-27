@@ -1,20 +1,20 @@
-DROP TABLE IF EXISTS Pilota;
-DROP TABLE IF EXISTS Meccanico;
-DROP TABLE IF EXISTS Supervisore;
-DROP TABLE IF EXISTS Scuderia;
-DROP TABLE IF EXISTS Sponsor;
 DROP TABLE IF EXISTS Contratto;
-DROP TABLE IF EXISTS Veicolo;
 DROP TABLE IF EXISTS Controllo;
+DROP TABLE IF EXISTS Supervisore;
+DROP TABLE IF EXISTS Veicolo;
+DROP TABLE IF EXISTS Penalizza;
+DROP TABLE IF EXISTS Infrazione;
+DROP TABLE IF EXISTS Partecipa;
+DROP TABLE IF EXISTS Opera;
+DROP TABLE IF EXISTS Investe;
+DROP TABLE IF EXISTS Pitstop;
+DROP TABLE IF EXISTS Giro;
+DROP TABLE IF EXISTS Meccanico;
+DROP TABLE IF EXISTS Pilota;
 DROP TABLE IF EXISTS Gara;
 DROP TABLE IF EXISTS Pista;
-DROP TABLE IF EXISTS Giro;
-DROP TABLE IF EXISTS Infrazione;
-DROP TABLE IF EXISTS Pitstop;
-DROP TABLE IF EXISTS Partecipa;
-DROP TABLE IF EXISTS Investe;
-DROP TABLE IF EXISTS Penalizza;
-DROP TABLE IF EXISTS Opera;
+DROP TABLE IF EXISTS Sponsor;
+DROP TABLE IF EXISTS Scuderia;
 
 CREATE TABLE Pilota(
     codice_fiscale CHAR(50) PRIMARY KEY,
@@ -135,14 +135,15 @@ CREATE TABLE Investe(
 );
 
 CREATE TABLE Penalizza(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     giro INTEGER REFERENCES Giro(id),
     infrazione CHAR(50) REFERENCES Infrazione(nome),
     penalita INTEGER NOT NULL,
-    PRIMARY KEY (giro, infrazione),
     CHECK (penalita > 0)
 );
 
 CREATE TABLE Opera(
-    pitstop INTEGER PRIMARY KEY REFERENCES Pitstop(giro),
-    meccanico CHAR(50) REFERENCES Meccanico(codice_fiscale)
+    pitstop INTEGER REFERENCES Pitstop(giro),
+    meccanico CHAR(50) REFERENCES Meccanico(codice_fiscale),
+    PRIMARY KEY (pitstop, meccanico)
 );
