@@ -423,6 +423,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
     \item In un dato istante, un pilota può avere attivo un solo contratto con una scuderia.
     \item La data di inizio di un contratto deve essere antecedente alla data di fine.
     \item I meccanici che operano ad un pit stop devono appartenere alla stessa scuderia del pilota che effettua il giro.
+    \item Un contratto deve avere come inizio una data antecedente a quella della fondazione della scuderia.
 \end{enumerate}
 
 % \subsubsection{Regole di derivazione}
@@ -637,11 +638,11 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             \makecell[l]{Contratto(\underline{numero}, data\_inizio, data\_fine,\\numero\_pilota, pilota, scuderia, veicolo)} & \makecell[l]{pilota $\rightarrow$ Pilota.codice\_fiscale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale \\ auto $\rightarrow$ Auto.id} \\
             \hline
-            Veicolo(\underline{id}, potenza, max\_velocita) & \makecell[l]{-} \\
+            Veicolo(\underline{id}, nome, potenza, max\_velocita) & \makecell[l]{-} \\ % AGGIORNARE ER -> E' STATO AGGIUNTO IL CAMPO NOME
             \hline
             Controllo(\underline{veicolo}, \underline{data\_ora}, esito, supervisore) & \makecell[l]{veicolo $\rightarrow$ Veicolo.id\\supervisore $\rightarrow$ Supervisore.codice\_fiscale} \\
             \hline
-            Gara(\underline{nome}, data\_ore, num\_giri, sponsor, pista) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ pista $\rightarrow$ Pista.nome} \\
+            Gara(\underline{nome}, data\_ora, num\_giri, sponsor, pista) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ pista $\rightarrow$ Pista.nome} \\
             \hline
             Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti) & \makecell[l]{-} \\
             \hline
