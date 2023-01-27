@@ -156,14 +156,15 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
     \item Inserire il tempo pit stop ($\sim$20 volte per gara)
     \item Inserire il tempo di un giro del pilota sulla pista ($\sim$1000 volte per gara)
     \item Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno)
-    \item Visualizzare gli sponsor di una gara (1 volta per gara)
-    \item Visualizzare il pilota con il tempo migliora su una data pista (1 volta per gara)
-    \item Visualizzare i piloti e la scuderia con cui gareggiano per una data gara (1 volta per gara)
+    \item Visualizzare lo sponsor di una gara (1 volta per gara)
+    \item Visualizzare il pilota con il tempo migliore su una data pista (1 volta per gara)
+    \item Visualizzare i piloti e la scuderia con cui gareggiano per una data gara ordinandoli per scuderia (1 volta per gara)
     \item Visualizzare la classifica (finale o temporanea) di una data gara ($\sim$50 volte per gara)
     \item Visualizzare il pilota con il maggior numero di vittorie (1 volta per gara)
     \item Visualizzare la scuderia con il maggior numero di vittorie (1 volta per gara)
     \item Visualizzare lo sponsor più presente (1 volta all'anno)
     \item Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data (poche volte all'anno)
+    \item Visualizzare nome, cognome e numero dei piloti di una data scuderia con contratto attivo al momento attuale (poche volte all'anno)
 \end{enumerate}
 
 \section{Progettazione concettuale}
@@ -546,6 +547,10 @@ Per il concetto di competizione sono state identificate con approccio inside-out
 \subsubsection{Cambio chiave per l'entità Giro}
 La chiave dell'entità Giro comprende l'insieme degli attributi numero del giro, nome della gara e id del pilota. Inoltre, l'entità Pit stop utilizza come chiave l'associazione a Giro.\\
 Tale approccio rende scomodo lavorare con le due entità, per tale ragione è stato deciso di introdurre un identificatore per l'entità Giro che svolge la funzione di chiave.
+
+%
+% Penalità ha ora come PRIMARY KEY un id
+%
 
 \subsection{Normalizzazione}
 \subsection{Traduzione verso il modello relazionale}
