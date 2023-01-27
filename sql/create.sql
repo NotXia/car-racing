@@ -1,8 +1,26 @@
+DROP TABLE IF EXISTS Pilota;
+DROP TABLE IF EXISTS Meccanico;
+DROP TABLE IF EXISTS Supervisore;
+DROP TABLE IF EXISTS Scuderia;
+DROP TABLE IF EXISTS Sponsor;
+DROP TABLE IF EXISTS Contratto;
+DROP TABLE IF EXISTS Veicolo;
+DROP TABLE IF EXISTS Controllo;
+DROP TABLE IF EXISTS Gara;
+DROP TABLE IF EXISTS Pista;
+DROP TABLE IF EXISTS Giro;
+DROP TABLE IF EXISTS Infrazione;
+DROP TABLE IF EXISTS Pitstop;
+DROP TABLE IF EXISTS Partecipa;
+DROP TABLE IF EXISTS Investe;
+DROP TABLE IF EXISTS Penalizza;
+DROP TABLE IF EXISTS Opera;
+
 CREATE TABLE Pilota(
     codice_fiscale CHAR(50) PRIMARY KEY,
     nome CHAR(50) NOT NULL,
     cognome CHAR(50) NOT NULL,
-    data_nascita DATETIME NOT NULL,
+    data_nascita DATE NOT NULL,
     luogo_nascita CHAR(50) NOT NULL
 );
 
@@ -10,7 +28,7 @@ CREATE TABLE Meccanico(
     codice_fiscale CHAR(50) PRIMARY KEY,
     nome CHAR(50) NOT NULL,
     cognome CHAR(50) NOT NULL,
-    data_nascita DATETIME NOT NULL,
+    data_nascita DATE NOT NULL,
     luogo_nascita CHAR(50) NOT NULL,
     ruolo CHAR(50) NOT NULL,
     scuderia CHAR(50) NOT NULL REFERENCES Scuderia(ragione_sociale)
@@ -20,7 +38,7 @@ CREATE TABLE Supervisore(
     codice_fiscale CHAR(50) PRIMARY KEY,
     nome CHAR(50) NOT NULL,
     cognome CHAR(50) NOT NULL,
-    data_nascita DATETIME NOT NULL,
+    data_nascita DATE NOT NULL,
     luogo_nascita CHAR(50) NOT NULL
 );
 
@@ -51,6 +69,7 @@ CREATE TABLE Contratto(
 
 CREATE TABLE Veicolo(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(50) NOT NULL,
     potenza INTEGER NOT NULL,
     max_velocita INTEGER NOT NULL,
     CHECK (potenza > 0 AND max_velocita > 0)
