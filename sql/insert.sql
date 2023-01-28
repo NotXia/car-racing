@@ -583,34 +583,34 @@ INSERT INTO Investe (scuderia, sponsor) VALUES
     ('Alfa Romeo', 'Pirelli'),
     ('Haas', 'Acer');
 
-INSERT INTO Giro (id, numero, tempo, gara, pilota) VALUES 
-    (0, 1, 120000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
-    (1, 2, 90000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
-    (2, 3, 150000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
-    (3, 4, 180000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
-    (4, 5, 70000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
-    (5, 1, 120000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
-    (6, 2, 150000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
-    (7, 3, 180000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
-    (8, 4, 200000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F');
+-- INSERT INTO Giro (id, numero, tempo, gara, pilota) VALUES 
+--     (0, 1, 120000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+--     (1, 2, 90000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+--     (2, 3, 150000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+--     (3, 4, 180000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+--     (4, 5, 70000, 'Azerbaijan Grand Prix', 'SNZCLS94P01Z131Y'),
+--     (5, 1, 120000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
+--     (6, 2, 150000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
+--     (7, 3, 180000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F'),
+--     (8, 4, 200000, 'Azerbaijan Grand Prix', 'HMLLWS85A07Z114F');
 
-INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES 
-    (8, 2500, 21000),
-    (7, 2500, 20000);
+-- INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES 
+--     (8, 2500, 21000),
+--     (7, 2500, 20000);
 
-INSERT INTO Opera (pitstop, meccanico) VALUES 
-    (8, '253-47-3122'),
-    (7, '253-47-3122'),
-    (7, '253-47-3123');
+-- INSERT INTO Opera (pitstop, meccanico) VALUES 
+--     (8, '253-47-3122'),
+--     (7, '253-47-3122'),
+--     (7, '253-47-3123');
 
 INSERT INTO Infrazione (nome, descrizione) VALUES 
     ('Taglio di curva', 'Quando un pilota taglia la curva'),
     ('Eccessiva velocità in pit lane', 'Quando un pilota guida con velocità eccessiva nella pit lane'),
     ('Eccessiva velocità durante safety car', 'Quando un pilota guida con velocità eccessiva durante il regime di safety car');
 
-INSERT INTO Penalizza (id, giro, infrazione, penalita) VALUES 
-    (NULL, 4, 'Taglio di curva', 2000),
-    (NULL, 4, 'Taglio di curva', 3000);
+-- INSERT INTO Penalizza (id, giro, infrazione, penalita) VALUES 
+--     (NULL, 4, 'Taglio di curva', 2000),
+--     (NULL, 4, 'Taglio di curva', 3000);
 
 INSERT INTO Contratto (numero, data_inizio, data_fine, numero_pilota, pilota, scuderia, veicolo) VALUES 
     (NULL, '2022-01-01', '2023-12-31', 63, 'RSSGRG98B15Z114G', 'Mercedes',     1),
