@@ -46,7 +46,7 @@ def lapGenerator():
     for (event_name, event_laps) in events:
         for pilot in pilots:
             did_finish = random.random() <= 0.8 # 80% of the pilots complete the competition
-            pilot_laps = event_laps if did_finish else random.randint(0, event_laps-1)
+            pilot_laps = event_laps if did_finish else random.randint(1, event_laps-1)
 
             for i in range(pilot_laps):
                 gen_laps.append({
