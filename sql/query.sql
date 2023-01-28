@@ -76,13 +76,14 @@ FROM (SELECT S.ragione_sociale
     FROM Sponsor AS S INNER JOIN Gara AS G ON S.ragione_sociale = G.sponsor) AS X
 GROUP BY X.ragione_sociale
 HAVING COUNT(*) = ( SELECT COUNT(*)
-                    FROM (SELECT S.ragione_sociale
-                    FROM Sponsor AS S INNER JOIN Investe AS I ON I.sponsor = S.ragione_sociale
-                    UNION ALL
-                    SELECT S.ragione_sociale
-                    FROM Sponsor AS S INNER JOIN Gara AS G ON S.ragione_sociale = G.sponsor) AS X
-                    GROUP BY X.ragione_sociale
-                    ORDER BY COUNT(*) DESC LIMIT 1);
+                    FROM (
+                        SELECT S.ragione_sociale
+                        FROM Sponsor AS S INNER JOIN Investe AS I ON I.sponsor = S.ragione_sociale
+                        UNION ALL
+                        SELECT S.ragione_sociale
+                        FROM Sponsor AS S INNER JOIN Gara AS G ON S.ragione_sociale = G.sponsor) AS X
+                        GROUP BY X.ragione_sociale
+                        ORDER BY COUNT(*) DESC LIMIT 1);
 
 -- Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data
 SELECT C.scuderia
