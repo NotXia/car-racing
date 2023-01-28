@@ -1,6 +1,6 @@
 INSERT INTO Pista (nome, nazione, citta, lunghezza, num_posti) VALUES 
     ('Bahrain International Circuit', 'Bahrain', 'Sakhir', 5412, 70000),
-    ('Jeddah Corniche Circuit', 'Arabia Saudita', 'Jeddah', 6174, NULL),
+    ('Jeddah Corniche Circuit', 'Arabia Saudita', 'Jeddah', 6174, 143000),
     ('Melbourne Grand Prix Circuit', 'Australia', 'Melbourne', 5278, 125000),
     ('Autodromo Enzo e Dino Ferrari', 'Italia', 'Imola', 4909, 78000),
     ('Miami International Autodrome', 'Stati Uniti', 'Miami', 5412, 65000),

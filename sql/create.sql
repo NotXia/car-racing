@@ -97,7 +97,7 @@ CREATE TABLE Pista(
     nazione CHAR(50) NOT NULL,
     citta CHAR(50) NOT NULL,
     lunghezza INTEGER NOT NULL,
-    num_posti INTEGER,
+    num_posti INTEGER NOT NULL,
     CHECK (lunghezza > 0 AND num_posti >= 0)
 );
 
