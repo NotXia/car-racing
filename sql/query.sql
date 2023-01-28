@@ -90,7 +90,7 @@ FROM Contratto AS C
 WHERE '2023-01-27' BETWEEN C.data_inizio AND C.data_fine AND
     C.pilota = 'SCHMCK99C22Z110X';
 
--- Visualizzare nome, cognome e numero dei piloti di una data scuderia con contratto attivo al momento attuale 
+-- Visualizzare nome, cognome e numero di gara dei piloti di una data scuderia con contratto attivo al momento attuale 
 SELECT P.cognome, P.nome, C.numero_pilota
 FROM Contratto AS C INNER JOIN Scuderia AS S ON C.scuderia = S.ragione_sociale 
     INNER JOIN Pilota AS P ON P.codice_fiscale = C.pilota
