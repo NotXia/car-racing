@@ -29,6 +29,27 @@
 \patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
 \usepackage{enumitem}
 
+\usepackage{xcolor,listings}
+\usepackage{textcomp}
+\usepackage{color}
+
+\definecolor{sql_comment}{HTML}{50b300}
+\definecolor{sql_keywork}{HTML}{0081bd}
+\definecolor{sql_string}{HTML}{b03602}
+\lstdefinestyle{sqlstyle}{
+    commentstyle=\color{sql_comment},
+    keywordstyle=\color{sql_keywork},
+    stringstyle=\color{sql_string},
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,
+    keepspaces=true,
+    showstringspaces=false,
+    showspaces=false,
+    showtabs=false,
+}
+\lstset{style=sqlstyle}
+
 \tolerance=1
 \emergencystretch=\maxdimen
 \hyphenpenalty=10000
@@ -672,8 +693,45 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
 
 
 \section{Codifica SQL}
+
 \subsection{Definizione dello schema}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Pilota(
+    codice_fiscale CHAR(50) PRIMARY KEY,
+    nome CHAR(50) NOT NULL,
+    cognome CHAR(50) NOT NULL,
+    data_nascita DATE NOT NULL,
+    luogo_nascita CHAR(50) NOT NULL
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+-- Inserimento sponsor
+INSERT INTO Sponsor (ragione_sociale, tipologia, nazione) VALUES 
+('Coca Cola', 'Alimentare', 'Stati Uniti'),
+('Pirelli', 'Pneumatici', 'Italia'),
+('Acer', 'Informatica', 'Taiwan'),
+('Save the Children', 'ONG', 'Regno Unito'),
+('Rolex', 'Orologeria', 'Svizzera'),
+('Nike', 'Abbigliamento', 'Stati Uniti');
+\end{lstlisting}
+
 \subsection{Codifica delle operazioni}
+
+\begin{lstlisting}[ language=SQL ]
+SELECT Pilota.nome, Pilota.cognome, GiroReale.tempo_totale
+FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
+               INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
+WHERE Gara.pista = 'Autodromo Enzo e Dino Ferrari' AND
+      GiroReale.tempo_totale = (
+          SELECT GiroReale.tempo_totale
+          FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
+          WHERE Gara.pista = 'Autodromo Enzo e Dino Ferrari'
+          ORDER BY GiroReale.tempo_totale LIMIT 1
+      );
+\end{lstlisting}
+
 
 
 \section{Testing}
