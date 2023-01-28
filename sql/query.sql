@@ -53,7 +53,7 @@ WHERE GiroReale.gara = 'Australian Grand Prix' AND
     Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine
 GROUP BY GiroReale.pilota
 HAVING SUM(GiroReale.tempo_totale) = (
-        SELECT SUM(GiroReale.tempo_totale) AS tempo_gara
+        SELECT SUM(GiroReale.tempo_totale) AS tempo_gara -- !!!!!!!!!!!!!!!!!!!!!! Non necessariamente, controllare anche numero giri
         FROM GiroReale
         WHERE GiroReale.gara = 'Australian Grand Prix'
         GROUP BY GiroReale.pilota
@@ -61,7 +61,28 @@ HAVING SUM(GiroReale.tempo_totale) = (
     )
 ORDER BY COUNT(GiroReale.pilota) DESC, SUM(GiroReale.tempo_totale) ASC;
 
--- Visualizzare il pilota con il maggior numero di vittorie
+-- Visualizzare in ordine decrescente i piloti e il loro numero di vittorie !!!!!!!!!!!!!!!!(Controllare)
+SELECT Pilota.nome, Pilota.cognome, Pilota.codice_fiscale, COUNT(*) AS vittorie
+FROM Pilota INNER JOIN (SELECT GiroReale.pilota, GiroReale.gara
+                        FROM GiroReale
+                        GROUP BY GiroReale.gara, GiroReale.pilota
+                        HAVING SUM(GiroReale.tempo_totale) = (
+                                SELECT SUM(GR.tempo_totale)
+                                FROM GiroReale AS GR
+                                WHERE GR.gara = GiroReale.gara
+                                GROUP BY GR.pilota
+                                ORDER BY COUNT(GR.id) DESC, SUM(GR.tempo_totale) ASC
+                            ) AND
+                            COUNT(GiroReale.id) = (
+                                SELECT COUNT(GR.id)
+                                FROM GiroReale AS GR
+                                WHERE GR.gara = GiroReale.gara
+                                GROUP BY GR.pilota
+                                ORDER BY COUNT(GR.id) DESC, SUM(GR.tempo_totale) ASC
+                            )
+    ) AS vincitori ON Pilota.codice_fiscale = vincitori.pilota
+GROUP BY Pilota.codice_fiscale
+ORDER BY vittorie DESC;
 
 
 -- Visualizzare la scuderia con il maggior numero di vittorie
