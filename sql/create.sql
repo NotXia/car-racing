@@ -17,43 +17,46 @@ DROP TABLE IF EXISTS Sponsor;
 DROP TABLE IF EXISTS Scuderia;
 
 CREATE TABLE Pilota(
-    codice_fiscale CHAR(50) PRIMARY KEY,
-    nome CHAR(50) NOT NULL,
-    cognome CHAR(50) NOT NULL,
+    codice_fiscale CHAR(20) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cognome VARCHAR(100) NOT NULL,
     data_nascita DATE NOT NULL,
-    luogo_nascita CHAR(50) NOT NULL
+    luogo_nascita VARCHAR(100) NOT NULL,
+    CHECK data_nascita < date('now')
 );
 
 CREATE TABLE Meccanico(
-    codice_fiscale CHAR(50) PRIMARY KEY,
-    nome CHAR(50) NOT NULL,
-    cognome CHAR(50) NOT NULL,
+    codice_fiscale CHAR(20) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cognome VARCHAR(100) NOT NULL,
     data_nascita DATE NOT NULL,
-    luogo_nascita CHAR(50) NOT NULL,
-    ruolo CHAR(50) NOT NULL,
-    scuderia CHAR(50) NOT NULL REFERENCES Scuderia(ragione_sociale)
+    luogo_nascita VARCHAR(100) NOT NULL,
+    ruolo VARCHAR(100) NOT NULL,
+    scuderia VARCHAR(100) NOT NULL REFERENCES Scuderia(ragione_sociale),
+    CHECK data_nascita < date('now')
 );
 
 CREATE TABLE Supervisore(
-    codice_fiscale CHAR(50) PRIMARY KEY,
-    nome CHAR(50) NOT NULL,
-    cognome CHAR(50) NOT NULL,
+    codice_fiscale CHAR(20) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cognome VARCHAR(100) NOT NULL,
     data_nascita DATE NOT NULL,
-    luogo_nascita CHAR(50) NOT NULL
+    luogo_nascita VARCHAR(100) NOT NULL,
+    CHECK data_nascita < date('now')
 );
 
 CREATE TABLE Scuderia(
-    ragione_sociale CHAR(50) PRIMARY KEY,
-    colore CHAR(50) NOT NULL,
-    nazione CHAR(50) NOT NULL,
+    ragione_sociale VARCHAR(100) PRIMARY KEY,
+    colore VARCHAR(100) NOT NULL,
+    nazione VARCHAR(100) NOT NULL,
     anno_fondazione SMALLINT NOT NULL,
     CHECK (anno_fondazione > 0)
 );
 
 CREATE TABLE Sponsor(
-    ragione_sociale CHAR(50) PRIMARY KEY,
-    tipologia CHAR(50) NOT NULL,
-    nazione CHAR(50) NOT NULL
+    ragione_sociale VARCHAR(100) PRIMARY KEY,
+    tipologia VARCHAR(100) NOT NULL,
+    nazione VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Contratto(
@@ -61,18 +64,18 @@ CREATE TABLE Contratto(
     data_inizio DATETIME NOT NULL,
     data_fine DATETIME NOT NULL,
     numero_pilota TINYINT NOT NULL,
-    pilota CHAR(50) REFERENCES Pilota(codice_fiscale),
-    scuderia CHAR(50) REFERENCES Scuderia(ragione_sociale),
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
     veicolo INTEGER REFERENCES Veicolo(id),
-    CHECK (data_fine > data_inizio)
+    CHECK (data_fine > data_inizio AND numero_pilota > 0)
 );
 
 CREATE TABLE Veicolo(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL,
+    nome VARCHAR(100) NOT NULL,
     potenza INTEGER NOT NULL,
     max_velocita INTEGER NOT NULL,
-    scuderia CHAR(50) REFERENCES Scuderia(ragione_sociale),
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
     CHECK (potenza > 0 AND max_velocita > 0)
 );
 
@@ -80,21 +83,23 @@ CREATE TABLE Controllo(
     veicolo INTEGER REFERENCES Veicolo(id),
     data_ora DATETIME,
     esito BOOLEAN NOT NULL,
-    supervisore CHAR(50) REFERENCES Supervisore(codice_fiscale),
-    PRIMARY KEY (veicolo, data_ora)
+    supervisore VARCHAR(100) REFERENCES Supervisore(codice_fiscale),
+    PRIMARY KEY (veicolo, data_ora),
+    CHECK (data_ora <= date('now'))
 );
 
 CREATE TABLE Gara(
-    nome CHAR(50) PRIMARY KEY,
+    nome VARCHAR(100) PRIMARY KEY,
     data_ora DATETIME NOT NULL,
-    sponsor CHAR(50) REFERENCES Sponsor(ragione_sociale),
-    pista CHAR(50) REFERENCES Pista(nome)
+    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale),
+    pista VARCHAR(100) REFERENCES Pista(nome),
+    CHECK (data_ora <= date('now'))
 );
 
 CREATE TABLE Pista(
-    nome CHAR(50) PRIMARY KEY,
-    nazione CHAR(50) NOT NULL,
-    citta CHAR(50) NOT NULL,
+    nome VARCHAR(100) PRIMARY KEY,
+    nazione VARCHAR(100) NOT NULL,
+    citta VARCHAR(100) NOT NULL,
     lunghezza INTEGER NOT NULL,
     num_posti INTEGER NOT NULL,
     num_giri TINYINT NOT NULL,
@@ -105,13 +110,13 @@ CREATE TABLE Giro(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     numero INTEGER NOT NULL,
     tempo INTEGER NOT NULL,
-    gara CHAR(50) REFERENCES Gara(nome),
-    pilota CHAR(50) REFERENCES Pilota(codice_fiscale),
+    gara VARCHAR(100) REFERENCES Gara(nome),
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
     CHECK (numero > 0 AND tempo > 0)
 );
 
 CREATE TABLE Infrazione(
-    nome CHAR(50) PRIMARY KEY,
+    nome VARCHAR(100) PRIMARY KEY,
     descrizione CHAR(500) NOT NULL
 );
 
@@ -123,27 +128,27 @@ CREATE TABLE Pitstop(
 );
 
 CREATE TABLE Partecipa(
-    gara CHAR(50) REFERENCES Gara(nome),
-    pilota CHAR(50) REFERENCES Pilota(codice_fiscale),
+    gara VARCHAR(100) REFERENCES Gara(nome),
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
     PRIMARY KEY (gara, pilota)
 );
 
 CREATE TABLE Investe(
-    sponsor CHAR(50) REFERENCES Sponsor(ragione_sociale),
-    scuderia CHAR(50) REFERENCES Scuderia(ragione_sociale),
+    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale),
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
     PRIMARY KEY (sponsor, scuderia)
 );
 
 CREATE TABLE Penalizza(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     giro INTEGER REFERENCES Giro(id),
-    infrazione CHAR(50) REFERENCES Infrazione(nome),
+    infrazione VARCHAR(100) REFERENCES Infrazione(nome),
     penalita INTEGER NOT NULL,
     CHECK (penalita > 0)
 );
 
 CREATE TABLE Opera(
     pitstop INTEGER REFERENCES Pitstop(giro),
-    meccanico CHAR(50) REFERENCES Meccanico(codice_fiscale),
+    meccanico VARCHAR(100) REFERENCES Meccanico(codice_fiscale),
     PRIMARY KEY (pitstop, meccanico)
 );
