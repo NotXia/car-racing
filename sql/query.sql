@@ -33,7 +33,7 @@ WHERE Veicolo.scuderia = 'Ferrari';
 
 
 -- Visualizzare la lunghezza media, massima e minima delle piste
-SELECT AVG(lunghezza), MAX(lunghezza), MIN(lunghezza)
+SELECT AVG(lunghezza) AS Media, MAX(lunghezza) AS Massimo, MIN(lunghezza) AS Minimo
 FROM Pista;
 
 

@@ -970,82 +970,66 @@ CREATE TABLE Opera(
 );
 \end{lstlisting}
 
+
 \subsection{Codifica delle operazioni}
 
 \subsubsection{Operazione 1}
 Inserire una nuova scuderia (in media 1 volta ogni cinque anni).
 \begin{lstlisting}[ language=SQL ]
-SELECT AVG(lunghezza), MAX(lunghezza), MIN(lunghezza)
-FROM Pista;
+INSERT INTO Scuderia (ragione_sociale, colore, nazione, anno_fondazione) VALUES
+    ('<ragione sociale>', '<colore>', '<nazione>', <anno fondazione>);
 \end{lstlisting}
 
 
 \subsubsection{Operazione 2}
 Inserire una nuova gara (in media 1 volta all'anno).
 \begin{lstlisting}[ language=SQL ]
-SELECT S.*
-FROM Gara AS G INNER JOIN Sponsor AS S ON G.sponsor = S.ragione_sociale
-WHERE G.nome = 'Gran Premio d''Italia'; 
+INSERT INTO Gara (nome, data_ora, sponsor, pista) VALUES 
+    ('<nome>', '<data e ora>', <sponsor o NULL>, '<nome pista>');
 \end{lstlisting}
 
 
 \subsubsection{Operazione 3}
 Inserire il tempo di un giro del pilota sulla pista ($\sim$1000 volte per gara).
 \begin{lstlisting}[ language=SQL ]
-SELECT sponsor.ragione_sociale, COUNT(*) AS num_comparse
-FROM (SELECT Investe.sponsor AS ragione_sociale FROM Investe 
-      UNION ALL 
-      SELECT Gara.sponsor AS ragione_sociale FROM Gara) AS sponsor
-GROUP BY sponsor.ragione_sociale
-HAVING num_comparse = (
-    SELECT COUNT(*) AS comparse
-    FROM (SELECT Investe.sponsor AS ragione_sociale FROM Investe 
-          UNION ALL 
-          SELECT Gara.sponsor AS ragione_sociale FROM Gara) AS sponsor
-    GROUP BY sponsor.ragione_sociale
-    ORDER BY comparse DESC LIMIT 1
-);
+INSERT INTO Giro (id, numero, tempo, gara, pilota) VALUES 
+    (NULL, <numero>, <tempo>, '<nome gara>', '<codice fiscale pilota>');
 \end{lstlisting}
 
 
 \subsubsection{Operazione 4}
 Inserire il tempo pit stop (almeno 20 volte per gara).
 \begin{lstlisting}[ language=SQL ]
-SELECT C.scuderia
-FROM Contratto AS C
-WHERE ('2023-01-27' BETWEEN C.data_inizio AND C.data_fine) AND
-      C.pilota = 'SCHMCK99C22Z110X';
+INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES 
+    (<id giro>, <tempo operazione>, <tempo totale>);
 \end{lstlisting}
 
 
 \subsubsection{Operazione 5}
 Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno).
 \begin{lstlisting}[ language=SQL ]
-SELECT P.cognome, P.nome, C.numero_pilota
-FROM Contratto AS C INNER JOIN Scuderia AS S ON C.scuderia = S.ragione_sociale 
-                    INNER JOIN Pilota AS P ON P.codice_fiscale = C.pilota
-WHERE S.ragione_sociale = 'Ferrari' AND
-      (date('now') BETWEEN C.data_inizio AND C.data_fine);
+INSERT INTO Contratto 
+    (numero, data_inizio, data_fine, numero_pilota, pilota, scuderia, veicolo) 
+VALUES 
+    (NULL, '<data inizio>', '<data fine>', <numero pilota>, 
+    '<codice fiscale pilota>', '<ragione sociale scuderia>', <id veicolo>);
 \end{lstlisting}
 
 
 \subsubsection{Operazione 6}
 Incrementare la potenza e la velocità massima dei veicoli di una data scuderia (in media 2 volte all'anno).
 \begin{lstlisting}[ language=SQL ]
-SELECT D.nome, D.cognome, C.scuderia
-FROM Partecipa AS P INNER JOIN Pilota AS D ON P.pilota = D.codice_fiscale
-                    INNER JOIN Contratto AS C ON D.codice_fiscale = C.pilota
-                    INNER JOIN Gara AS G ON P.gara = G.nome
-WHERE P.gara = 'Azerbaijan Grand Prix' AND
-      (G.data_ora BETWEEN C.data_inizio AND C.data_fine)
-ORDER BY C.scuderia;    
+UPDATE Veicolo
+SET potenza = potenza + 50,
+    max_velocita = max_velocita + 5
+WHERE Veicolo.scuderia = '<Ragione sociale scuderia>';   
 \end{lstlisting}
 
 
 \subsubsection{Operazione 7}
 Visualizzare la lunghezza media, massima e minima delle piste (1 volta all'anno).
 \begin{lstlisting}[ language=SQL ]
-SELECT AVG(lunghezza), MAX(lunghezza), MIN(lunghezza)
+SELECT AVG(lunghezza) AS Media, MAX(lunghezza) AS Massimo, MIN(lunghezza) AS Minimo
 FROM Pista;
 \end{lstlisting}
 
@@ -1055,7 +1039,7 @@ Visualizzare lo sponsor di una gara (1 volta per gara).
 \begin{lstlisting}[ language=SQL ]
 SELECT S.*
 FROM Gara AS G INNER JOIN Sponsor AS S ON G.sponsor = S.ragione_sociale
-WHERE G.nome = 'Gran Premio d''Italia';
+WHERE G.nome = '<Nome gara>';
 \end{lstlisting}
 
 
@@ -1085,8 +1069,8 @@ Visualizzare la scuderia con cui un pilota ha un contratto in una determinata da
 \begin{lstlisting}[ language=SQL ]
 SELECT C.scuderia
 FROM Contratto AS C
-WHERE ('2023-01-27' BETWEEN C.data_inizio AND C.data_fine) AND
-      C.pilota = 'SCHMCK99C22Z110X';
+WHERE ('<Data>' BETWEEN C.data_inizio AND C.data_fine) AND
+      C.pilota = '<Codice fiscale pilota>';
 \end{lstlisting}
 
 
@@ -1096,7 +1080,7 @@ Visualizzare nome, cognome e numero di gara dei piloti di una data scuderia con 
 SELECT P.cognome, P.nome, C.numero_pilota
 FROM Contratto AS C INNER JOIN Scuderia AS S ON C.scuderia = S.ragione_sociale 
                     INNER JOIN Pilota AS P ON P.codice_fiscale = C.pilota
-WHERE S.ragione_sociale = 'Ferrari' AND
+WHERE S.ragione_sociale = '<Ragione sociale scuderia>' AND
       (date('now') BETWEEN C.data_inizio AND C.data_fine);
 \end{lstlisting}
 
@@ -1108,7 +1092,7 @@ SELECT D.nome, D.cognome, C.scuderia
 FROM Partecipa AS P INNER JOIN Pilota AS D ON P.pilota = D.codice_fiscale
                     INNER JOIN Contratto AS C ON D.codice_fiscale = C.pilota
                     INNER JOIN Gara AS G ON P.gara = G.nome
-WHERE P.gara = 'Azerbaijan Grand Prix' AND
+WHERE P.gara = '<Nome gara>' AND
       (G.data_ora BETWEEN C.data_inizio AND C.data_fine)
 ORDER BY C.scuderia;
 \end{lstlisting}
@@ -1138,11 +1122,11 @@ Visualizzare il pilota con il tempo migliore su una data pista (1 volta per gara
 SELECT Pilota.nome, Pilota.cognome, GiroReale.tempo_totale
 FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
                INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
-WHERE Gara.pista = 'Autodromo Enzo e Dino Ferrari' AND
+WHERE Gara.pista = '<Nome pista>' AND
       GiroReale.tempo_totale = (
          SELECT MIN(GiroReale.tempo_totale)
          FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
-         WHERE Gara.pista = 'Autodromo Enzo e Dino Ferrari'
+         WHERE Gara.pista = '<Nome pista>'
       );
 \end{lstlisting}
 
@@ -1155,7 +1139,7 @@ SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia, COUNT(GiroReale.id) AS n
 FROM GiroReale INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
                INNER JOIN Contratto ON Pilota.codice_fiscale = Contratto.pilota
                INNER JOIN Gara ON GiroReale.gara = Gara.nome
-WHERE GiroReale.gara = 'Australian Grand Prix' AND
+WHERE GiroReale.gara = '<Nome gara>' AND
       (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine)
 GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
 ORDER BY num_giri DESC, tempo_gara ASC;
@@ -1170,13 +1154,13 @@ FROM GiroReale INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
                INNER JOIN Contratto ON Pilota.codice_fiscale = Contratto.pilota
                INNER JOIN Gara ON GiroReale.gara = Gara.nome
                INNER JOIN Pista ON Gara.pista = Pista.nome
-WHERE GiroReale.gara = 'Australian Grand Prix' AND
+WHERE GiroReale.gara = '<Nome gara>' AND
       (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine)
 GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
 HAVING SUM(GiroReale.tempo_totale) = (
             SELECT SUM(GiroReale.tempo_totale) AS tempo_gara
             FROM GiroReale
-            WHERE GiroReale.gara = 'Australian Grand Prix'
+            WHERE GiroReale.gara = '<Nome gara>'
             GROUP BY GiroReale.pilota
             ORDER BY COUNT(GiroReale.id) DESC, tempo_gara ASC LIMIT 1
        ) AND
