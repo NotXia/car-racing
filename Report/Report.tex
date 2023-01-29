@@ -589,7 +589,52 @@ L'associazione Penalizza...
 \end{figure}
 
 \subsection{Normalizzazione}
+\subsubsection{Associazioni}
+Tutte le associazioni dello schema concettuale ristrutturato risultano in forma normale di Boyce e Codd in quanto binarie.
 
+\subsection{Entità}
+\begin{center}
+    \def\arraystretch{1.2}%
+    \begin{tabular}{ |p{2cm}|p{14.5cm}| }
+        \hline
+        \textbf{Entità} & \textbf{Analisi} \\
+
+        \hline
+        Pilota & \par{L'unica dipendenza funzionale non banale è tra codice fiscale e il resto degli attributi} \\
+        \hline
+        Meccanico & \par{L'unica dipendenza funzionale non banale è tra codice fiscale e il resto degli attributi} \\
+        \hline
+        Supervisore & \par{L'unica dipendenza funzionale non banale è tra codice fiscale e il resto degli attributi} \\
+        \hline
+        Scuderia & \par{L'unica dipendenza funzionale non banale è tra ragione sociale e il resto degli attributi} \\
+        \hline
+        Sponsor & \par{L'unica dipendenza funzionale non banale è tra ragione sociale e il resto degli attributi} \\
+        \hline
+        Contratto & \par{L'unica dipendenza funzionale non banale è tra il numero contratto e il resto degli attributi} \\
+        \hline
+        Veicolo & \par{L'unica dipendenza funzionale non banale è tra l'id e il resto degli attributi} \\
+        \hline
+        Controllo & \par{L'unica dipendenza funzionale non banale è \{ data e ora, id dell'auto \} $\rightarrow$ resto degli attributi} \\
+        \hline
+        Gara & \makecell{%
+            Esiste una dipendenza funzionale non banale tra la pista e il numero dei giri.\\
+            In quanto il numero di giri è definito in relazione alle caratteristiche della pista.
+            % \includegraphics[width=5cm]{../er/finale.pdf}
+            % \rowincludegraphics[scale=0.1]{../er/norm_pista.pdf}
+        } \\
+        \hline
+        Pista & \par{L'unica dipendenza funzionale non banale è tra il nome della pista e il resto degli attributi} \\
+        \hline
+        Giro & \par{L'unica dipendenza funzionale non banale è tra l'id del giro e il resto degli attributi} \\
+        \hline
+        Infrazione & \par{L'unica dipendenza funzionale non banale è tra il nome dell'infrazione e il resto degli attributi} \\
+        \hline
+        Pit stop & \par{L'unica dipendenza funzionale non banale è tra l'id del giro e il resto degli attributi} \\
+        \hline
+        Penalizza & \par{L'unica dipendenza funzionale non banale è tra l'id e il resto degli attributi} \\
+        \hline
+    \end{tabular}
+\end{center}
 
 \subsection{Traduzione verso il modello relazionale}
 
@@ -617,9 +662,9 @@ L'associazione Penalizza...
             \hline
             Controllo & Controllo(\underline{veicolo}, \underline{data\_ora}, esito, supervisore) \\
             \hline
-            Gara & Gara(\underline{nome}, data, num\_giri, sponsor, pista) \\
+            Gara & Gara(\underline{nome}, data, sponsor, pista) \\
             \hline
-            Pista & Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti) \\
+            Pista & Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti, num\_giri) \\
             \hline
             Giro & Giro(\underline{id}, numero, tempo, gara, pilota) \\
             \hline
@@ -687,9 +732,9 @@ L'associazione Penalizza...
             \hline
             Controllo(\underline{veicolo}, \underline{data\_ora}, esito, supervisore) & \makecell[l]{veicolo $\rightarrow$ Veicolo.id\\supervisore $\rightarrow$ Supervisore.codice\_fiscale} \\
             \hline
-            Gara(\underline{nome}, data\_ora, num\_giri, sponsor, pista) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ pista $\rightarrow$ Pista.nome} \\
+            Gara(\underline{nome}, data\_ora, sponsor, pista) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ pista $\rightarrow$ Pista.nome} \\
             \hline
-            Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti) & \makecell[l]{-} \\
+            Pista(\underline{nome}, nazione, citta, lunghezza, num\_posti, num\_giri) & \makecell[l]{-} \\
             \hline
             Giro(\underline{id}, numero, tempo, gara, pilota) & \makecell[l]{gara $\rightarrow$ Gara.nome \\ pilota $\rightarrow$ Pilota.codice\_fiscale} \\
             \hline
