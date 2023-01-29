@@ -174,18 +174,25 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
 \begin{enumerate}
     \item Inserire una nuova scuderia (in media 1 volta ogni cinque anni)
     \item Inserire una nuova gara (in media 1 volta all'anno)
-    \item Inserire il tempo pit stop ($\sim$20 volte per gara)
     \item Inserire il tempo di un giro del pilota sulla pista ($\sim$1000 volte per gara)
+    \item Inserire il tempo pit stop (almeno 20 volte per gara)
     \item Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno)
+    \item Incrementare la potenza e la velocità massima dei veicoli di una data scuderia (in media 2 volte all'anno)
+    \item Visualizzare la lunghezza media, massima e minima delle piste (1 volta all'anno)
     \item Visualizzare lo sponsor di una gara (1 volta per gara)
-    \item Visualizzare il pilota con il tempo migliore su una data pista (1 volta per gara)
-    \item Visualizzare i piloti e la scuderia con cui gareggiano per una data gara ordinandoli per scuderia (1 volta per gara)
-    \item Visualizzare la classifica (finale o temporanea) di una data gara ($\sim$50 volte per gara)
-    \item Visualizzare il pilota con il maggior numero di vittorie (1 volta per gara)
-    \item Visualizzare la scuderia con il maggior numero di vittorie (1 volta per gara)
     \item Visualizzare lo sponsor più presente (1 volta all'anno)
-    \item Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data (poche volte all'anno)
-    \item Visualizzare nome, cognome e numero dei piloti di una data scuderia con contratto attivo al momento attuale (poche volte all'anno)
+    \item Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data (2 volte all'anno)
+    \item Visualizzare nome, cognome e numero di gara dei piloti di una data scuderia con contratto attivo al momento attuale (2 volte all'anno)
+    \item Visualizzare i piloti e la scuderia con cui gareggiano per una data gara raggruppandoli per scuderia (3 volte per gara)
+    \item Visualizzare il tempo reale di un giro ($\sim$1000 volte per gara)
+    \item Visualizzare il pilota con il tempo migliore su una data pista (1 volta per gara)
+    \item Visualizzare la classifica (finale o temporanea) di una data gara ($\sim$50 volte per gara)
+    \item Visualizzare i vincitori di una gara (1 volta per gara)
+    \item Visualizzare in ordine decrescente i piloti e il loro numero di vittorie (1 volta per gara)
+    \item Visualizzare il pilota più giovane ad aver vinto almeno una gara (1 volta per gara)
+    \item Visualizzare pilota e scuderia con il pitstop più veloce (1 volta per gara)
+    \item Visualizzare il supervisore che ha effettuato il maggior numero di controlli con esito negativo (poche volte all'anno)
+    \item Visualizzare la scuderia e l'auto che ha avuto il maggior numero di controlli con esito negativo (poche volte all'anno)
 \end{enumerate}
 
 \section{Progettazione concettuale}
@@ -455,6 +462,12 @@ Per il concetto di competizione sono state identificate con approccio inside-out
     \item Il veicolo assegnato in un contratto deve appartenere alla scuderia che lo emette.
 \end{enumerate}
 
+\subsubsection{Regole di vincolo}
+\begin{enumerate}[label={RD \arabic*}, leftmargin=4em]
+    \item Il tempo totale impiegato per un giro è dato dalla somma del tempo del giro sommato a quello dell'eventuale pit stop e possibili penalità.
+    \item Il vincitore di una gara è il pilota che ha completato il numero di giri previsti nel minor tempo complessivo. In caso di pareggio, si considerano più vincitori.
+\end{enumerate}
+
 % \subsubsection{Regole di derivazione}
 % \begin{enumerate}[label={RD \arabic*}, leftmargin=4em]
 %     \item 
@@ -544,31 +557,47 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         \textbf{Operazione} & \textbf{Frequenza} \\
 
         \hline
-        1 & 1 volta ogni cinque anni \\
+        1 & In media 1 volta ogni cinque anni \\
         \hline
-        2 & 1 volta all'anno \\
+        2 & In media 1 volta all'anno \\
         \hline
-        3 & $\sim$20 volte per gara \\
+        3 & $\sim$1000 volte per gara \\
         \hline
-        4 & $\sim$1000 volte per gara \\
+        4 & Almeno 20 volte per gara \\ 
         \hline
         5 & Poche volte ogni anno \\
         \hline
-        6 & 1 volta per gara \\
+        6 & In media 2 volte all'anno \\ 
         \hline
-        7 & 1 volta per gara \\
+        7 & 1 volta all'anno \\
         \hline
         8 & 1 volta per gara \\
         \hline
-        9 & $\sim$50 volte per gara \\
+        9 & 1 volta all'anno \\
         \hline
-        10 & 1 volta per gara \\
+        10 & 1 2 volte all'anno \\
         \hline
-        11 & 1 volta per gara \\
+        11 & 1 2 volte all'anno \\
         \hline
-        12 & 1 volta all'anno \\
+        12 & 1 3 volte per gara \\
         \hline
-        13 & Poche volte all'anno \\
+        13 & $\sim$1000 volte per gara \\
+        \hline
+        14 & 1 volta per gara \\
+        \hline
+        15 & $\sim$50 volte per gara \\
+        \hline
+        16 & 1 volta per gara \\
+        \hline
+        17 & 1 volta per gara \\
+        \hline
+        18 & 1 volta per gara \\
+        \hline
+        19 & 1 volta per gara \\
+        \hline
+        20 & Poche volte all'anno \\
+        \hline
+        21 & Poche volte all'anno \\
         \hline
     \end{tabular}
 \end{center}
@@ -772,40 +801,474 @@ Le entità così definite sono in forma normale di Boyce e Codd.
 
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Pilota(
-    codice_fiscale CHAR(50) PRIMARY KEY,
-    nome CHAR(50) NOT NULL,
-    cognome CHAR(50) NOT NULL,
+    codice_fiscale CHAR(20) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cognome VARCHAR(100) NOT NULL,
     data_nascita DATE NOT NULL,
-    luogo_nascita CHAR(50) NOT NULL
+    luogo_nascita VARCHAR(100) NOT NULL,
+    CHECK data_nascita < date('now')
 );
 \end{lstlisting}
 
 \begin{lstlisting}[ language=SQL ]
--- Inserimento sponsor
-INSERT INTO Sponsor (ragione_sociale, tipologia, nazione) VALUES 
-('Coca Cola', 'Alimentare', 'Stati Uniti'),
-('Pirelli', 'Pneumatici', 'Italia'),
-('Acer', 'Informatica', 'Taiwan'),
-('Save the Children', 'ONG', 'Regno Unito'),
-('Rolex', 'Orologeria', 'Svizzera'),
-('Nike', 'Abbigliamento', 'Stati Uniti');
+    CREATE TABLE Meccanico(
+    codice_fiscale CHAR(20) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cognome VARCHAR(100) NOT NULL,
+    data_nascita DATE NOT NULL,
+    luogo_nascita VARCHAR(100) NOT NULL,
+    ruolo VARCHAR(100) NOT NULL,
+    scuderia VARCHAR(100) NOT NULL REFERENCES Scuderia(ragione_sociale),
+    CHECK data_nascita < date('now')
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Supervisore(
+    codice_fiscale CHAR(20) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cognome VARCHAR(100) NOT NULL,
+    data_nascita DATE NOT NULL,
+    luogo_nascita VARCHAR(100) NOT NULL,
+    CHECK data_nascita < date('now')
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Scuderia(
+    ragione_sociale VARCHAR(100) PRIMARY KEY,
+    colore VARCHAR(100) NOT NULL,
+    nazione VARCHAR(100) NOT NULL,
+    anno_fondazione SMALLINT NOT NULL,
+    CHECK (anno_fondazione > 0)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Sponsor(
+    ragione_sociale VARCHAR(100) PRIMARY KEY,
+    tipologia VARCHAR(100) NOT NULL,
+    nazione VARCHAR(100) NOT NULL
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Contratto(
+    numero INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_inizio DATETIME NOT NULL,
+    data_fine DATETIME NOT NULL,
+    numero_pilota TINYINT NOT NULL,
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
+    veicolo INTEGER REFERENCES Veicolo(id),
+    CHECK (data_fine > data_inizio AND numero_pilota > 0)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Veicolo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    potenza INTEGER NOT NULL,
+    max_velocita INTEGER NOT NULL,
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
+    CHECK (potenza > 0 AND max_velocita > 0)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Controllo(
+    veicolo INTEGER REFERENCES Veicolo(id),
+    data_ora DATETIME,
+    esito BOOLEAN NOT NULL,
+    supervisore VARCHAR(100) REFERENCES Supervisore(codice_fiscale),
+    PRIMARY KEY (veicolo, data_ora),
+    CHECK (data_ora <= date('now'))
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Gara(
+    nome VARCHAR(100) PRIMARY KEY,
+    data_ora DATETIME NOT NULL,
+    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale),
+    pista VARCHAR(100) REFERENCES Pista(nome),
+    CHECK (data_ora <= date('now'))
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Pista(
+    nome VARCHAR(100) PRIMARY KEY,
+    nazione VARCHAR(100) NOT NULL,
+    citta VARCHAR(100) NOT NULL,
+    lunghezza INTEGER NOT NULL,
+    num_posti INTEGER NOT NULL,
+    num_giri TINYINT NOT NULL,
+    CHECK (lunghezza > 0 AND num_posti >= 0 AND num_giri > 0)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Giro(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    numero INTEGER NOT NULL,
+    tempo INTEGER NOT NULL,
+    gara VARCHAR(100) REFERENCES Gara(nome),
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
+    CHECK (numero > 0 AND tempo > 0)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Infrazione(
+    nome VARCHAR(100) PRIMARY KEY,
+    descrizione VARCHAR(500) NOT NULL
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Pitstop(
+    giro INTEGER PRIMARY KEY REFERENCES Giro(id),
+    tempo_operazione INTEGER NOT NULL,
+    tempo_totale INTEGER NOT NULL,
+    CHECK (tempo_operazione > 0 AND tempo_totale > tempo_operazione)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Partecipa(
+    gara VARCHAR(100) REFERENCES Gara(nome),
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
+    PRIMARY KEY (gara, pilota)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Investe(
+    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale),
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
+    PRIMARY KEY (sponsor, scuderia)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Penalizza(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    giro INTEGER REFERENCES Giro(id),
+    infrazione VARCHAR(100) REFERENCES Infrazione(nome),
+    penalita INTEGER NOT NULL,
+    CHECK (penalita > 0)
+);
+\end{lstlisting}
+
+\begin{lstlisting}[ language=SQL ]
+CREATE TABLE Opera(
+    pitstop INTEGER REFERENCES Pitstop(giro),
+    meccanico VARCHAR(100) REFERENCES Meccanico(codice_fiscale),
+    PRIMARY KEY (pitstop, meccanico)
+);
 \end{lstlisting}
 
 \subsection{Codifica delle operazioni}
 
+\subsubsection{Operazione 1}
+Inserire una nuova scuderia (in media 1 volta ogni cinque anni).
+\begin{lstlisting}[ language=SQL ]
+SELECT AVG(lunghezza), MAX(lunghezza), MIN(lunghezza)
+FROM Pista;
+\end{lstlisting}
+
+
+\subsubsection{Operazione 2}
+Inserire una nuova gara (in media 1 volta all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT S.*
+FROM Gara AS G INNER JOIN Sponsor AS S ON G.sponsor = S.ragione_sociale
+WHERE G.nome = 'Gran Premio d''Italia'; 
+\end{lstlisting}
+
+
+\subsubsection{Operazione 3}
+Inserire il tempo di un giro del pilota sulla pista ($\sim$1000 volte per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT sponsor.ragione_sociale, COUNT(*) AS num_comparse
+FROM (SELECT Investe.sponsor AS ragione_sociale FROM Investe 
+      UNION ALL 
+      SELECT Gara.sponsor AS ragione_sociale FROM Gara) AS sponsor
+GROUP BY sponsor.ragione_sociale
+HAVING num_comparse = (
+    SELECT COUNT(*) AS comparse
+    FROM (SELECT Investe.sponsor AS ragione_sociale FROM Investe 
+          UNION ALL 
+          SELECT Gara.sponsor AS ragione_sociale FROM Gara) AS sponsor
+    GROUP BY sponsor.ragione_sociale
+    ORDER BY comparse DESC LIMIT 1
+);
+\end{lstlisting}
+
+
+\subsubsection{Operazione 4}
+Inserire il tempo pit stop (almeno 20 volte per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT C.scuderia
+FROM Contratto AS C
+WHERE ('2023-01-27' BETWEEN C.data_inizio AND C.data_fine) AND
+      C.pilota = 'SCHMCK99C22Z110X';
+\end{lstlisting}
+
+
+\subsubsection{Operazione 5}
+Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT P.cognome, P.nome, C.numero_pilota
+FROM Contratto AS C INNER JOIN Scuderia AS S ON C.scuderia = S.ragione_sociale 
+                    INNER JOIN Pilota AS P ON P.codice_fiscale = C.pilota
+WHERE S.ragione_sociale = 'Ferrari' AND
+      (date('now') BETWEEN C.data_inizio AND C.data_fine);
+\end{lstlisting}
+
+
+\subsubsection{Operazione 6}
+Incrementare la potenza e la velocità massima dei veicoli di una data scuderia (in media 2 volte all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT D.nome, D.cognome, C.scuderia
+FROM Partecipa AS P INNER JOIN Pilota AS D ON P.pilota = D.codice_fiscale
+                    INNER JOIN Contratto AS C ON D.codice_fiscale = C.pilota
+                    INNER JOIN Gara AS G ON P.gara = G.nome
+WHERE P.gara = 'Azerbaijan Grand Prix' AND
+      (G.data_ora BETWEEN C.data_inizio AND C.data_fine)
+ORDER BY C.scuderia;    
+\end{lstlisting}
+
+
+\subsubsection{Operazione 7}
+Visualizzare la lunghezza media, massima e minima delle piste (1 volta all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT AVG(lunghezza), MAX(lunghezza), MIN(lunghezza)
+FROM Pista;
+\end{lstlisting}
+
+
+\subsubsection{Operazione 8}
+Visualizzare lo sponsor di una gara (1 volta per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT S.*
+FROM Gara AS G INNER JOIN Sponsor AS S ON G.sponsor = S.ragione_sociale
+WHERE G.nome = 'Gran Premio d''Italia';
+\end{lstlisting}
+
+
+\subsubsection{Operazione 9}
+Visualizzare lo sponsor più presente (1 volta all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT sponsor.ragione_sociale, COUNT(*) AS num_comparse
+FROM (SELECT Investe.sponsor AS ragione_sociale FROM Investe 
+      UNION ALL 
+      SELECT Gara.sponsor AS ragione_sociale FROM Gara) AS sponsor
+GROUP BY sponsor.ragione_sociale
+HAVING num_comparse = (
+    SELECT COUNT(*) AS comparse
+    FROM (
+        SELECT Investe.sponsor AS ragione_sociale FROM Investe 
+        UNION ALL 
+        SELECT Gara.sponsor AS ragione_sociale FROM Gara
+    ) AS sponsor
+    GROUP BY sponsor.ragione_sociale
+    ORDER BY comparse DESC LIMIT 1
+);
+\end{lstlisting}
+
+
+\subsubsection{Operazione 10}
+Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data (2 volte all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT C.scuderia
+FROM Contratto AS C
+WHERE ('2023-01-27' BETWEEN C.data_inizio AND C.data_fine) AND
+      C.pilota = 'SCHMCK99C22Z110X';
+\end{lstlisting}
+
+
+\subsubsection{Operazione 11}
+Visualizzare nome, cognome e numero di gara dei piloti di una data scuderia con contratto attivo al momento attuale (2 volte all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT P.cognome, P.nome, C.numero_pilota
+FROM Contratto AS C INNER JOIN Scuderia AS S ON C.scuderia = S.ragione_sociale 
+                    INNER JOIN Pilota AS P ON P.codice_fiscale = C.pilota
+WHERE S.ragione_sociale = 'Ferrari' AND
+      (date('now') BETWEEN C.data_inizio AND C.data_fine);
+\end{lstlisting}
+
+
+\subsubsection{Operazione 12}
+Visualizzare i piloti e la scuderia con cui gareggiano per una data gara raggruppandoli per scuderia (3 volte per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT D.nome, D.cognome, C.scuderia
+FROM Partecipa AS P INNER JOIN Pilota AS D ON P.pilota = D.codice_fiscale
+                    INNER JOIN Contratto AS C ON D.codice_fiscale = C.pilota
+                    INNER JOIN Gara AS G ON P.gara = G.nome
+WHERE P.gara = 'Azerbaijan Grand Prix' AND
+      (G.data_ora BETWEEN C.data_inizio AND C.data_fine)
+ORDER BY C.scuderia;
+\end{lstlisting}
+
+
+\subsubsection{Operazione 13}
+Visualizzare il tempo reale di un giro ($\sim$1000 volte per gara).
+\begin{lstlisting}[ language=SQL ]
+CREATE VIEW IF NOT EXISTS GiroReale AS
+SELECT Giro.id, Giro.pilota, Giro.gara, Giro.numero, 
+       (
+         Giro.tempo + 
+         COALESCE(SUM(Penalizza.penalita), 0) + 
+         COALESCE(Pitstop.tempo_totale, 0)
+       ) AS tempo_totale
+FROM Giro LEFT OUTER JOIN Penalizza ON Giro.id = Penalizza.giro
+          LEFT OUTER JOIN Pitstop ON Giro.id = Pitstop.giro
+GROUP BY Giro.id, Giro.pilota, Giro.gara, Giro.numero;
+
+SELECT * FROM GiroReale;
+\end{lstlisting}
+
+
+\subsubsection{Operazione 14}
+Visualizzare il pilota con il tempo migliore su una data pista (1 volta per gara).
 \begin{lstlisting}[ language=SQL ]
 SELECT Pilota.nome, Pilota.cognome, GiroReale.tempo_totale
 FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
                INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
 WHERE Gara.pista = 'Autodromo Enzo e Dino Ferrari' AND
       GiroReale.tempo_totale = (
-          SELECT GiroReale.tempo_totale
-          FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
-          WHERE Gara.pista = 'Autodromo Enzo e Dino Ferrari'
-          ORDER BY GiroReale.tempo_totale LIMIT 1
+         SELECT MIN(GiroReale.tempo_totale)
+         FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
+         WHERE Gara.pista = 'Autodromo Enzo e Dino Ferrari'
       );
 \end{lstlisting}
 
+
+\subsubsection{Operazione 15}
+Visualizzare la classifica (finale o temporanea) di una data gara ($\sim$50 volte per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia, COUNT(GiroReale.id) AS num_giri, 
+       SUM(GiroReale.tempo_totale) AS tempo_gara
+FROM GiroReale INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
+               INNER JOIN Contratto ON Pilota.codice_fiscale = Contratto.pilota
+               INNER JOIN Gara ON GiroReale.gara = Gara.nome
+WHERE GiroReale.gara = 'Australian Grand Prix' AND
+      (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine)
+GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
+ORDER BY num_giri DESC, tempo_gara ASC;
+\end{lstlisting}
+
+
+\subsubsection{Operazione 16}
+Visualizzare i vincitori di una gara (1 volta per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia
+FROM GiroReale INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
+               INNER JOIN Contratto ON Pilota.codice_fiscale = Contratto.pilota
+               INNER JOIN Gara ON GiroReale.gara = Gara.nome
+               INNER JOIN Pista ON Gara.pista = Pista.nome
+WHERE GiroReale.gara = 'Australian Grand Prix' AND
+      (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine)
+GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
+HAVING SUM(GiroReale.tempo_totale) = (
+            SELECT SUM(GiroReale.tempo_totale) AS tempo_gara
+            FROM GiroReale
+            WHERE GiroReale.gara = 'Australian Grand Prix'
+            GROUP BY GiroReale.pilota
+            ORDER BY COUNT(GiroReale.id) DESC, tempo_gara ASC LIMIT 1
+       ) AND
+       COUNT(GiroReale.id) = Pista.num_giri
+ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
+\end{lstlisting}
+
+
+\subsubsection{Operazione 17}
+Visualizzare in ordine decrescente i piloti e il loro numero di vittorie (1 volta per gara).
+\begin{lstlisting}[ language=SQL ]
+CREATE VIEW IF NOT EXISTS Vincitore AS
+SELECT Pilota.nome, Pilota.cognome, Pilota.codice_fiscale, 
+       COUNT(vincitori.gara) AS vittorie
+FROM Pilota LEFT OUTER JOIN (
+        SELECT GiroReale.pilota, GiroReale.gara
+        FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
+                       INNER JOIN Pista ON Gara.pista = Pista.nome
+        GROUP BY GiroReale.gara, GiroReale.pilota
+        HAVING SUM(GiroReale.tempo_totale) = (
+                    SELECT SUM(GR.tempo_totale)
+                    FROM GiroReale AS GR
+                    WHERE GR.gara = GiroReale.gara
+                    GROUP BY GR.pilota
+                    ORDER BY COUNT(GR.id) DESC, SUM(GR.tempo_totale) ASC LIMIT 1
+                ) AND
+                COUNT(GiroReale.id) = Pista.num_giri
+     ) AS vincitori ON Pilota.codice_fiscale = vincitori.pilota
+GROUP BY Pilota.codice_fiscale
+ORDER BY vittorie DESC;
+
+SELECT * FROM Vincitore;
+\end{lstlisting}
+
+
+\subsubsection{Operazione 18}
+Visualizzare il pilota più giovane ad aver vinto almeno una gara (1 volta per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT Pilota.nome, Pilota.cognome, Pilota.data_nascita
+FROM Vincitore INNER JOIN Pilota ON Vincitore.codice_fiscale = Pilota.codice_fiscale
+WHERE Vincitore.vittorie > 0 AND
+   Pilota.data_nascita = (
+    SELECT MAX(Pilota.data_nascita)
+    FROM Vincitore INNER JOIN Pilota ON Vincitore.codice_fiscale = Pilota.codice_fiscale
+    WHERE Vincitore.vittorie > 0
+   );
+\end{lstlisting}
+
+
+\subsubsection{Operazione 19}
+Visualizzare pilota e scuderia con il pitstop più veloce (1 volta per gara).
+\begin{lstlisting}[ language=SQL ]
+SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia, Pitstop.tempo_operazione, 
+       Gara.nome AS nome_gara
+FROM Pitstop INNER JOIN Giro ON Pitstop.giro = Giro.id
+             INNER JOIN Pilota ON Giro.pilota = Pilota.codice_fiscale
+             INNER JOIN Gara ON Giro.gara = Gara.nome
+             INNER JOIN Contratto ON Pilota.codice_fiscale = Contratto.pilota
+WHERE (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine) AND
+      Pitstop.tempo_operazione = (SELECT MIN(Pitstop.tempo_operazione)
+                                  FROM Pitstop);
+\end{lstlisting}
+
+
+\subsubsection{Operazione 20}
+Visualizzare il supervisore che ha effettuato il maggior numero di controlli con esito negativo (poche volte all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT S.nome, S.cognome, S.codice_fiscale
+FROM Supervisore AS S INNER JOIN Controllo AS C ON S.codice_fiscale = C.supervisore
+WHERE C.esito = 0
+GROUP BY C.supervisore, S.nome, S.cognome, S.codice_fiscale
+HAVING COUNT(*) = (SELECT COUNT(*)
+                   FROM Controllo
+                   WHERE Controllo.esito = 0
+                   GROUP BY Controllo.supervisore
+                   ORDER BY COUNT(*) DESC LIMIT 1);
+\end{lstlisting}
+
+
+\subsubsection{Operazione 21}
+Visualizzare la scuderia e l'auto che ha avuto il maggior numero di controlli con esito negativo (poche volte all'anno).
+\begin{lstlisting}[ language=SQL ]
+SELECT Veicolo.nome, Veicolo.scuderia
+FROM Veicolo INNER JOIN Controllo ON Veicolo.id = Controllo.veicolo
+WHERE Controllo.esito = 0
+GROUP BY Controllo.veicolo, Veicolo.nome, Veicolo.scuderia
+HAVING COUNT(*) = (SELECT COUNT(*)
+                   FROM Controllo
+                   WHERE Controllo.esito = 0
+                   GROUP BY Controllo.veicolo
+                   ORDER BY COUNT(*) DESC LIMIT 1);
+\end{lstlisting}
 
 
 \section{Testing}

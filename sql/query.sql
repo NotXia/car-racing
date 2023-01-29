@@ -182,10 +182,10 @@ WHERE (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine) AND
     
 
 -- Visualizzare il supervisore che ha effettuato il maggior numero di controlli con esito negativo
-SELECT Supervisore.nome, Supervisore.cognome, Supervisore.codice_fiscale
-FROM Supervisore INNER JOIN Controllo ON Supervisore.codice_fiscale = Controllo.supervisore
-WHERE Controllo.esito = 0
-GROUP BY Controllo.supervisore, Supervisore.nome, Supervisore.cognome, Supervisore.codice_fiscale
+SELECT S.nome, S.cognome, S.codice_fiscale
+FROM Supervisore AS S INNER JOIN Controllo AS C ON S.codice_fiscale = C.supervisore
+WHERE C.esito = 0
+GROUP BY C.supervisore, S.nome, S.cognome, S.codice_fiscale
 HAVING COUNT(*) = (
     SELECT COUNT(*)
     FROM Controllo

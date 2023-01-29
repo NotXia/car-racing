@@ -117,7 +117,7 @@ CREATE TABLE Giro(
 
 CREATE TABLE Infrazione(
     nome VARCHAR(100) PRIMARY KEY,
-    descrizione CHAR(500) NOT NULL
+    descrizione VARCHAR(500) NOT NULL
 );
 
 CREATE TABLE Pitstop(
