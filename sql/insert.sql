@@ -56,12 +56,12 @@ INSERT INTO Scuderia (ragione_sociale, colore, nazione, anno_fondazione) VALUES
     ('Alfa Romeo', 'Rosso scuro', 'Svizzera', 1970),
     ('Haas', 'Bianco', 'Stati Uniti', 2015);
 
-INSERT INTO Meccanico (codice_fiscale, nome, cognome, data_nascita, luogo_nascita, ruolo, scuderia) VALUES 
-    ('447-09-1101', 'Kendra', 'Beard', '1958-02-15', 'Boynton', 'Capo strategista', 'Ferrari'),
-    ('107-12-3042', 'Kimberly', 'Dillon', '1981-09-04', 'New York', 'Meccanico', 'Red Bull'),
-    ('606-29-2134', 'Jeanne', 'Allen', '1979-04-27', 'San Diego', 'Meccanico', 'Ferrari'),
-    ('253-47-3122', 'Clara', 'Carlisle', '1968-12-08', 'Atlanta', 'Meccanico', 'Mercedes'),
-    ('253-47-3123', 'Clarissa', 'Carlisle', '1968-12-08', 'Atlanta', 'Meccanico', 'Mercedes');
+-- INSERT INTO Meccanico (codice_fiscale, nome, cognome, data_nascita, luogo_nascita, ruolo, scuderia) VALUES 
+--     ('447-09-1101', 'Kendra', 'Beard', '1958-02-15', 'Boynton', 'Capo strategista', 'Ferrari'),
+--     ('107-12-3042', 'Kimberly', 'Dillon', '1981-09-04', 'New York', 'Meccanico', 'Red Bull'),
+--     ('606-29-2134', 'Jeanne', 'Allen', '1979-04-27', 'San Diego', 'Meccanico', 'Ferrari'),
+--     ('253-47-3122', 'Clara', 'Carlisle', '1968-12-08', 'Atlanta', 'Meccanico', 'Mercedes'),
+--     ('253-47-3123', 'Clarissa', 'Carlisle', '1968-12-08', 'Atlanta', 'Meccanico', 'Mercedes');
 
 INSERT INTO Supervisore (codice_fiscale, nome, cognome, data_nascita, luogo_nascita) VALUES 
     ('290-42-0000', 'Regina', 'Foster', '1977-02-06', 'Westerville'),
@@ -91,8 +91,8 @@ INSERT INTO Veicolo (id, nome, potenza, max_velocita, scuderia) VALUES
     (18, 'VF-22', 1020, 322, 'Haas'),   
     (19, 'VF-22', 1020, 322, 'Haas');
 
-INSERT INTO Controllo (veicolo, data_ora, esito, supervisore) VALUES 
-    (0, '2023-03-03 15:33:33', 'Positivo', '419-54-0000');
+-- INSERT INTO Controllo (veicolo, data_ora, esito, supervisore) VALUES 
+--     (0, '2023-03-03 15:33:33', 1, '419-54-0000');
 
 INSERT INTO Sponsor (ragione_sociale, tipologia, nazione) VALUES 
     ('Coca Cola', 'Alimentare', 'Stati Uniti'),
