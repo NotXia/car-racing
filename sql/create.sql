@@ -72,6 +72,7 @@ CREATE TABLE Veicolo(
     nome CHAR(50) NOT NULL,
     potenza INTEGER NOT NULL,
     max_velocita INTEGER NOT NULL,
+    scuderia CHAR(50) REFERENCES Scuderia(ragione_sociale),
     CHECK (potenza > 0 AND max_velocita > 0)
 );
 

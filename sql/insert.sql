@@ -69,27 +69,27 @@ INSERT INTO Supervisore (codice_fiscale, nome, cognome, data_nascita, luogo_nasc
     ('639-94-0000', 'Gilberto', 'Maddux', '1966-11-26', 'Keller'),
     ('158-16-0000', 'Tammy', 'Bailey', '1945-06-31', 'West Orange');
 
-INSERT INTO Veicolo (id, nome, potenza, max_velocita) VALUES 
-    (0, 'W13 E Performance', 1000, 320),
-    (1, 'W13 E Performance', 1000, 320),
-    (2, 'RB18', 1040, 330),
-    (3, 'RB18', 1040, 330),
-    (4, 'F1-75', 1035, 324),
-    (5, 'F1-75', 1035, 324),
-    (6, 'MCL36', 1000, 321),
-    (7, 'MCL36', 1000, 321),
-    (8, 'A522', 980, 318),    
-    (9, 'A522', 980, 318),
-    (10, 'AT03', 960, 318),    
-    (11, 'AT03', 960, 318),
-    (12, 'AMR22', 960, 318),    
-    (13, 'AMR22', 960, 318),
-    (14, 'FW44', 1000, 320),    
-    (15, 'FW44', 1000, 320),
-    (16, 'C42', 1000, 320),    
-    (17, 'C42', 1000, 320),
-    (18, 'VF-22', 1020, 322),   
-    (19, 'VF-22', 1020, 322);
+INSERT INTO Veicolo (id, nome, potenza, max_velocita, scuderia) VALUES 
+    (0, 'W13 E Performance', 1000, 320, 'Mercedes'),
+    (1, 'W13 E Performance', 1000, 320, 'Mercedes'),
+    (2, 'RB18', 1040, 330, 'Red Bull'),
+    (3, 'RB18', 1040, 330, 'Red Bull'),
+    (4, 'F1-75', 1035, 324, 'Ferrari'),
+    (5, 'F1-75', 1035, 324, 'Ferrari'),
+    (6, 'MCL36', 1000, 321, 'McLaren'),
+    (7, 'MCL36', 1000, 321, 'McLaren'),
+    (8, 'A522', 980, 318, 'Alpine'),    
+    (9, 'A522', 980, 318, 'Alpine'),
+    (10, 'AT03', 960, 318, 'AlphaTauri'),    
+    (11, 'AT03', 960, 318, 'AlphaTauri'),
+    (12, 'AMR22', 960, 318, 'Aston Martin'),    
+    (13, 'AMR22', 960, 318, 'Aston Martin'),
+    (14, 'FW44', 1000, 320, 'Williams'),    
+    (15, 'FW44', 1000, 320, 'Williams'),
+    (16, 'C42', 1000, 320, 'Alfa Romeo'),    
+    (17, 'C42', 1000, 320, 'Alfa Romeo'),
+    (18, 'VF-22', 1020, 322, 'Haas'),   
+    (19, 'VF-22', 1020, 322, 'Haas');
 
 INSERT INTO Controllo (veicolo, data_ora, esito, supervisore) VALUES 
     (0, '2023-03-03 15:33:33', 'Positivo', '419-54-0000');

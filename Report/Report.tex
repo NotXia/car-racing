@@ -403,6 +403,12 @@ Per il concetto di competizione sono state identificate con approccio inside-out
             \parbox[t]{\linewidth}{-} \\
 
             \hline
+            Sviluppa & 
+            Associa l'auto alla scuderia & 
+            \parbox[t]{\linewidth}{Auto (1, 1)\\Scuderia (1, N)} & 
+            \parbox[t]{\linewidth}{-} \\
+
+            \hline
             Emette & 
             Associa la scuderia ai contratti che emette & 
             \parbox[t]{\linewidth}{Contratto (1, 1)\\Scuderia (0, N)} & 
@@ -446,6 +452,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
     \item La data di inizio di un contratto deve essere antecedente alla data di fine.
     \item I meccanici che operano ad un pit stop devono appartenere alla stessa scuderia del pilota che effettua il giro.
     \item Un contratto deve avere come inizio una data antecedente a quella della fondazione della scuderia.
+    \item Il veicolo assegnato in un contratto deve appartenere alla scuderia che lo emette.
 \end{enumerate}
 
 % \subsubsection{Regole di derivazione}
@@ -516,6 +523,8 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         Stipula & Relazione & 1400 \\
         \hline
         Assegna & Relazione & 1400 \\
+        \hline
+        Sviluppa & Relazione & 20 \\
         \hline
         Emette & Relazione & 1400 \\
         \hline
@@ -596,7 +605,7 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             Contratto & Contratto(\underline{numero}, data\_inizio, data\_fine, numero\_pilota, pilota, scuderia, auto) \\
             \hline
-            Auto & Auto(\underline{id}, potenza, max\_velocita) \\
+            Auto & Auto(\underline{id}, potenza, max\_velocita, scuderia) \\
             \hline
             Controllo & Controllo(\underline{auto}, \underline{data\_ora}, esito, supervisore) \\
             \hline
@@ -632,6 +641,8 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             Assegna & Accorpato in Contratto \\
             \hline
+            Sviluppa & Accorpato in Veicolo \\
+            \hline
             Emette & Accorpato in Contratto \\
             \hline
             Lavora & Accorpato in Meccanico \\
@@ -664,7 +675,7 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             \makecell[l]{Contratto(\underline{numero}, data\_inizio, data\_fine,\\numero\_pilota, pilota, scuderia, veicolo)} & \makecell[l]{pilota $\rightarrow$ Pilota.codice\_fiscale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale \\ auto $\rightarrow$ Auto.id} \\
             \hline
-            Veicolo(\underline{id}, nome, potenza, max\_velocita) & \makecell[l]{-} \\ % AGGIORNARE ER -> E' STATO AGGIUNTO IL CAMPO NOME
+            Veicolo(\underline{id}, nome, potenza, max\_velocita, scuderia) & \makecell[l]{scuderia $\rightarrow$ Scuderia.ragione\_sociale} \\ % AGGIORNARE ER -> E' STATO AGGIUNTO IL CAMPO NOME
             \hline
             Controllo(\underline{veicolo}, \underline{data\_ora}, esito, supervisore) & \makecell[l]{veicolo $\rightarrow$ Veicolo.id\\supervisore $\rightarrow$ Supervisore.codice\_fiscale} \\
             \hline
