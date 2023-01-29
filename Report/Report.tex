@@ -1033,6 +1033,15 @@ SELECT AVG(lunghezza) AS Media, MAX(lunghezza) AS Massimo, MIN(lunghezza) AS Min
 FROM Pista;
 \end{lstlisting}
 
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        \textbf{Media} & \textbf{Massimo} & \textbf{Minimo} \\ \hline
+        5151.181818181818 & 7004 & 3337 \\ \hline
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Operazione 8}
 Visualizzare lo sponsor di una gara (1 volta per gara).
@@ -1041,6 +1050,15 @@ SELECT S.*
 FROM Gara AS G INNER JOIN Sponsor AS S ON G.sponsor = S.ragione_sociale
 WHERE G.nome = '<Nome gara>';
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        \textbf{ragione\_sociale} & \textbf{tipologia} & \textbf{nazione} \\ \hline
+        Rolex & Orologeria & Svizzera \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Operazione 9}
@@ -1063,6 +1081,17 @@ HAVING num_comparse = (
 );
 \end{lstlisting}
 
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+        \textbf{ragione\_sociale} & \textbf{num\_comparse} \\ \hline
+        Acer & 6 \\ \hline
+        Coca Cola & 6 \\ \hline
+        Nike & 6 \\ \hline
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Operazione 10}
 Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data (2 volte all'anno).
@@ -1072,6 +1101,15 @@ FROM Contratto AS C
 WHERE ('<Data>' BETWEEN C.data_inizio AND C.data_fine) AND
       C.pilota = '<Codice fiscale pilota>';
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|}
+    \hline
+        scuderia \\ \hline
+        Red Bull \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Operazione 11}
@@ -1083,6 +1121,16 @@ FROM Contratto AS C INNER JOIN Scuderia AS S ON C.scuderia = S.ragione_sociale
 WHERE S.ragione_sociale = '<Ragione sociale scuderia>' AND
       (date('now') BETWEEN C.data_inizio AND C.data_fine);
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        cognome & nome & numero\_pilota \\ \hline
+        Leclerc & Charles & 16 \\ \hline
+        Sainz & Carlos & 55 \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Operazione 12}
@@ -1096,6 +1144,34 @@ WHERE P.gara = '<Nome gara>' AND
       (G.data_ora BETWEEN C.data_inizio AND C.data_fine)
 ORDER BY C.scuderia;
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        nome & cognome & scuderia \\ \hline
+        Valtteri & Bottas & Alfa Romeo \\ \hline
+        Zhou & Guanyu & Alfa Romeo \\ \hline
+        Pierre & Gasly & AlphaTauri \\ \hline
+        Yuki & Tsunoda & AlphaTauri \\ \hline
+        Fernando & Alonso & Alpine \\ \hline
+        Esteban & Ocon & Alpine \\ \hline
+        Lance & Stroll & Aston Martin \\ \hline
+        Sebastian & Vettel & Aston Martin \\ \hline
+        Charles & Leclerc & Ferrari \\ \hline
+        Carlos & Sainz & Ferrari \\ \hline
+        Kevin & Magnussen & Haas \\ \hline
+        Mick & Schumacher & Haas \\ \hline
+        Daniel & Ricciardo & McLaren \\ \hline
+        Lando & Norris & McLaren \\ \hline
+        George & Russell & Mercedes \\ \hline
+        Lewis & Hamilton & Mercedes \\ \hline
+        Max & Verstappen & Red Bull \\ \hline
+        Sergio & Pérez & Red Bull \\ \hline
+        Alexander & Albon & Williams \\ \hline
+        Nicholas & Latifi & Williams \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Operazione 13}
@@ -1115,6 +1191,21 @@ GROUP BY Giro.id, Giro.pilota, Giro.gara, Giro.numero;
 SELECT * FROM GiroReale;
 \end{lstlisting}
 
+\begin{center}
+    \begin{table}[!ht]
+        \centering
+        \begin{tabular}{|l|l|l|l|l|}
+            \hline
+            id & pilota & gara & numero & tempo\_totale \\ \hline
+            0 & RSSGRG98B15Z114G & Bahrain Grand Prix & 1 & 179548 \\ \hline
+            1 & RSSGRG98B15Z114G & Bahrain Grand Prix & 2 & 63654 \\ \hline
+            2 & RSSGRG98B15Z114G & Bahrain Grand Prix & 3 & 125114 \\ \hline
+        \end{tabular}
+    \end{table}
+    \vspace*{-1em}
+    \dots
+\end{center}
+
 
 \subsubsection{Operazione 14}
 Visualizzare il pilota con il tempo migliore su una data pista (1 volta per gara).
@@ -1130,6 +1221,15 @@ WHERE Gara.pista = '<Nome pista>' AND
       );
 \end{lstlisting}
 
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        nome & cognome & tempo\_totale \\ \hline
+        George & Russell & 61749 \\ \hline
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Operazione 15}
 Visualizzare la classifica (finale o temporanea) di una data gara ($\sim$50 volte per gara).
@@ -1144,6 +1244,34 @@ WHERE GiroReale.gara = '<Nome gara>' AND
 GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
 ORDER BY num_giri DESC, tempo_gara ASC;
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+        nome & cognome & scuderia & num\_giri & tempo\_gara \\ \hline
+        Lewis & Hamilton & Mercedes & 5 & 457808 \\ \hline
+        Alexander & Albon & Williams & 5 & 466535 \\ \hline
+        Pierre & Gasly & AlphaTauri & 5 & 474886 \\ \hline
+        George & Russell & Mercedes & 5 & 475413 \\ \hline
+        Sebastian & Vettel & Aston Martin & 5 & 476566 \\ \hline
+        Charles & Leclerc & Ferrari & 5 & 528565 \\ \hline
+        Zhou & Guanyu & Alfa Romeo & 5 & 536496 \\ \hline
+        Mick & Schumacher & Haas & 5 & 542647 \\ \hline
+        Daniel & Ricciardo & McLaren & 5 & 554410 \\ \hline
+        Yuki & Tsunoda & AlphaTauri & 5 & 567581 \\ \hline
+        Nicholas & Latifi & Williams & 4 & 371216 \\ \hline
+        Max & Verstappen & Red Bull & 4 & 505714 \\ \hline
+        Sergio & Pérez & Red Bull & 3 & 324935 \\ \hline
+        Fernando & Alonso & Alpine & 3 & 349770 \\ \hline
+        Lance & Stroll & Aston Martin & 2 & 210603 \\ \hline
+        Esteban & Ocon & Alpine & 1 & 98857 \\ \hline
+        Kevin & Magnussen & Haas & 1 & 105440 \\ \hline
+        Carlos & Sainz & Ferrari & 1 & 107001 \\ \hline
+        Valtteri & Bottas & Alfa Romeo & 1 & 115063 \\ \hline
+        Lando & Norris & McLaren & 1 & 134215 \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Operazione 16}
@@ -1167,6 +1295,15 @@ HAVING SUM(GiroReale.tempo_totale) = (
        COUNT(GiroReale.id) = Pista.num_giri
 ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        nome & cognome & scuderia \\ \hline
+        Lewis & Hamilton & Mercedes \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Operazione 17}
@@ -1195,6 +1332,34 @@ ORDER BY vittorie DESC;
 SELECT * FROM Vincitore;
 \end{lstlisting}
 
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{codice\_fiscale} & \textbf{vittorie} \\ \hline
+        Lewis & Hamilton & HMLLWS85A07Z114F & 4 \\ \hline
+        Charles & Leclerc & LCLCRL97R16Z123N & 4 \\ \hline
+        Kevin & Magnussen & MGNKVN92R05Z107H & 3 \\ \hline
+        Valtteri & Bottas & BTTVTT89M28Z109S & 2 \\ \hline
+        Sergio & Pérez & PRZSRG90A26Z514G & 2 \\ \hline
+        George & Russell & RSSGRG98B15Z114G & 2 \\ \hline
+        Alexander & Albon & LBNLND96C23Z241E & 1 \\ \hline
+        Daniel & Ricciardo & RCCDNL89L01Z700U & 1 \\ \hline
+        Mick & Schumacher & SCHMCK99C22Z110X & 1 \\ \hline
+        Carlos & Sainz & SNZCLS94P01Z131Y & 1 \\ \hline
+        Max & Verstappen & VRSMXA97P30Z126X & 1 \\ \hline
+        Esteban & Ocon & CNOSBN96P17Z110F & 0 \\ \hline
+        Pierre & Gasly & GSLPRR96B07Z110S & 0 \\ \hline
+        Fernando & Alonso & LNSFNN81L29Z131M & 0 \\ \hline
+        Nicholas & Latifi & LTFNHL95H29Z401V & 0 \\ \hline
+        Lando & Norris & NRRLND99S13Z114I & 0 \\ \hline
+        Lance & Stroll & STRLNC98R29Z401K & 0 \\ \hline
+        Yuki & Tsunoda & TSNYKU00E11Z219F & 0 \\ \hline
+        Sebastian & Vettel & VTTSST87L03Z110A & 0 \\ \hline
+        Zhou & Guanyu & ZHOGNY99E30Z210K & 0 \\ \hline
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Operazione 18}
 Visualizzare il pilota più giovane ad aver vinto almeno una gara (1 volta per gara).
@@ -1208,6 +1373,15 @@ WHERE Vincitore.vittorie > 0 AND
     WHERE Vincitore.vittorie > 0
    );
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{data\_nascita} \\ \hline
+        Mick & Schumacher & 1999-03-22 \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Operazione 19}
@@ -1224,6 +1398,15 @@ WHERE (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine) AND
                                   FROM Pitstop);
 \end{lstlisting}
 
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{scuderia} & \textbf{tempo\_operazione} & \textbf{nome\_gara} \\ \hline
+        Kevin & Magnussen & Haas & 1014 & Grande Prêmio de São Paulo \\ \hline
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Operazione 20}
 Visualizzare il supervisore che ha effettuato il maggior numero di controlli con esito negativo (poche volte all'anno).
@@ -1239,6 +1422,15 @@ HAVING COUNT(*) = (SELECT COUNT(*)
                    ORDER BY COUNT(*) DESC LIMIT 1);
 \end{lstlisting}
 
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{codice\_fiscale} \\ \hline
+        Tammy & Bailey & 158-16-0000 \\ \hline
+    \end{tabular}
+\end{table}
+
 
 \subsubsection{Operazione 21}
 Visualizzare la scuderia e l'auto che ha avuto il maggior numero di controlli con esito negativo (poche volte all'anno).
@@ -1253,6 +1445,15 @@ HAVING COUNT(*) = (SELECT COUNT(*)
                    GROUP BY Controllo.veicolo
                    ORDER BY COUNT(*) DESC LIMIT 1);
 \end{lstlisting}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+        \textbf{nome} & \textbf{scuderia} \\ \hline
+        W13 E Performance & Mercedes \\ \hline
+    \end{tabular}
+\end{table}
 
 
 \section{Testing}
