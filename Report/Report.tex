@@ -217,7 +217,7 @@ Come aziende, sono state identificate le entità scuderia e sponsor.
 
 \subsection{Definizioni dei macro-argomenti}
 \subsubsection{Definizioni dei partecipanti}
-Riguardo i partecipanti, con approccio inside-out, sono state identificate le entità: scuderia, contratto, auto, controllo. Oltre a pilota, meccanico, supervisore, sponsor.
+Riguardo i partecipanti, con approccio inside-out, sono state identificate le entità: scuderia, contratto, veicolo, controllo. Oltre a pilota, meccanico, supervisore, sponsor.
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare_scuderie.pdf}
@@ -227,8 +227,8 @@ Riguardo i partecipanti, con approccio inside-out, sono state identificate le en
 Per il concetto di competizione sono state identificate con approccio inside-out le entità: gara, pista, giro, infrazione, pit stop. Oltre a pilota, meccanico, sponsor.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15.5cm]{../er/gare_gara.pdf} % TODO CORREGGERE ENTITA' MECCANICI->MECCANICO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-\end{figure}                                            % I MECCANICI HANNO UN RUOLOOOOOOOOOOOO
+    \includegraphics[width=15.5cm]{../er/gare_gara.pdf}
+\end{figure}
 
 \subsection{Schema finale}
 \begin{figure}[H]
@@ -284,7 +284,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         Numero contratto (stringa) \\
 
         \hline
-        Auto &
+        Veicolo &
         Autovettura ad elevata velocità di fabbricazione di una scuderia guidata da un pilota &
         \parbox[t]{\linewidth}{Potenza (numero)\\Velocità massima (numero)} & 
         Id (stringa) \\
@@ -293,7 +293,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         Controllo &
         Verifica della regolarità di un auto effettuata da un supervisore & 
         \parbox[t]{\linewidth}{Esito (Booleano)} & 
-        \parbox[t]{\linewidth}{Data e ora (data)\\Id [Auto] } \\
+        \parbox[t]{\linewidth}{Data e ora (data)\\Id [Veicolo] } \\
 
         \hline
         Gara &
@@ -398,14 +398,14 @@ Per il concetto di competizione sono state identificate con approccio inside-out
 
             \hline
             Assegna & 
-            Associa l'auto assegnata nel contratto & 
-            \parbox[t]{\linewidth}{Contratto (1, 1)\\Auto (0, N)} & 
+            Associa il veicolo assegnata nel contratto & 
+            \parbox[t]{\linewidth}{Contratto (1, 1)\\Veicolo (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
             Sviluppa & 
-            Associa l'auto alla scuderia & 
-            \parbox[t]{\linewidth}{Auto (1, 1)\\Scuderia (1, N)} & 
+            Associa il veicolo alla scuderia & 
+            \parbox[t]{\linewidth}{Veicolo (1, 1)\\Scuderia (1, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
             \hline
@@ -422,8 +422,8 @@ Per il concetto di competizione sono state identificate con approccio inside-out
 
             \hline
             Accerta & 
-            Associa un controllo che viene effettuato su un'auto & 
-            \parbox[t]{\linewidth}{Auto (1, N)\\Controllo (1, 1)} & 
+            Associa un controllo che viene effettuato ad un veicolo & 
+            \parbox[t]{\linewidth}{Veicolo (1, N)\\Controllo (1, 1)} & 
             \parbox[t]{\linewidth}{-} \\
             
             \hline
@@ -447,7 +447,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
     \item Il tempo di un giro deve essere essere $>0$. 
     \item Il tempo delle operazioni e tempo totale dei pit stop devono essere $>0$.
     \item Il tempo della penalità deve essere $>0$.
-    \item La potenza e la velocità massima di un'auto deve essere $>0$.
+    \item La potenza e la velocità massima di un veicolo deve essere $>0$.
     \item In un dato istante, un pilota può avere attivo un solo contratto con una scuderia.
     \item La data di inizio di un contratto deve essere antecedente alla data di fine.
     \item I meccanici che operano ad un pit stop devono appartenere alla stessa scuderia del pilota che effettua il giro.
@@ -461,7 +461,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
 % \end{enumerate}
 
 \section{Progettazione logica}
-% TODO CREARE ID IN GIRO AL POSTO DELLA CHIAVE GIGANTE
+
 \subsection{Tavole dei volumi}
 \begin{center}
     \begin{tabular}{ |l|l|l| }
@@ -481,7 +481,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         \hline
         Contratto & Entità & 1400 \\
         \hline
-        Auto & Entità & 20 \\
+        Veicolo & Entità & 20 \\
         \hline
         Controllo & Entità & 55000 \\ % (73 anni di F1 * 20 piloti per gara * 2 (un controllo a inizio gara e uno alla fine) * 20 gare in media per stagione)
         \hline
@@ -578,13 +578,21 @@ Per il concetto di competizione sono state identificate con approccio inside-out
 La chiave dell'entità Giro comprende l'insieme degli attributi numero del giro, nome della gara e id del pilota. Inoltre, l'entità Pit stop utilizza come chiave l'associazione a Giro.\\
 Tale approccio rende scomodo lavorare con le due entità, per tale ragione è stato deciso di introdurre un identificatore per l'entità Giro che svolge la funzione di chiave.
 
-%
-% Penalità ha ora come PRIMARY KEY un id
-%
+\subsubsection{Ristrutturazione relazione Penalizza}
+L'associazione Penalizza...
+
+\begin{figure}[H]
+    \centering
+    \makebox[0cm]{
+        \includegraphics[width=17cm]{../er/finale.pdf}
+    }
+\end{figure}
 
 \subsection{Normalizzazione}
+
+
 \subsection{Traduzione verso il modello relazionale}
-% CAMBIARE AUTO IN VEICOLO PERCHE' PAROLA RISERVATA
+
 \begin{center}
     \makebox[0cm]{
         \def\arraystretch{1.2}%
@@ -603,11 +611,11 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             Sponsor & Sponsor(\underline{ragione\_sociale}, tipologia, nazione) \\
             \hline
-            Contratto & Contratto(\underline{numero}, data\_inizio, data\_fine, numero\_pilota, pilota, scuderia, auto) \\
+            Contratto & Contratto(\underline{numero}, data\_inizio, data\_fine, numero\_pilota, pilota, scuderia, veicolo) \\
             \hline
-            Auto & Auto(\underline{id}, potenza, max\_velocita, scuderia) \\
+            Veicolo & Veicolo(\underline{id}, potenza, max\_velocita, scuderia) \\
             \hline
-            Controllo & Controllo(\underline{auto}, \underline{data\_ora}, esito, supervisore) \\
+            Controllo & Controllo(\underline{veicolo}, \underline{data\_ora}, esito, supervisore) \\
             \hline
             Gara & Gara(\underline{nome}, data, num\_giri, sponsor, pista) \\
             \hline
@@ -633,7 +641,7 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             Effettua & Accorpata in Giro \\
             \hline
-            Penalizza & Penalizza(\underline{giro}, \underline{infrazione}, penalita) \\
+            Penalizza & Penalizza(\underline{id}, giro, infrazione, penalita) \\
             \hline
             Opera & Opera(\underline{pitstop}, \underline{meccanico}) \\
             \hline
@@ -673,7 +681,7 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             Sponsor(\underline{ragione\_sociale}, tipologia, nazione) & \makecell[l]{-} \\
             \hline
-            \makecell[l]{Contratto(\underline{numero}, data\_inizio, data\_fine,\\numero\_pilota, pilota, scuderia, veicolo)} & \makecell[l]{pilota $\rightarrow$ Pilota.codice\_fiscale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale \\ auto $\rightarrow$ Auto.id} \\
+            \makecell[l]{Contratto(\underline{numero}, data\_inizio, data\_fine,\\numero\_pilota, pilota, scuderia, veicolo)} & \makecell[l]{pilota $\rightarrow$ Pilota.codice\_fiscale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale \\ veicolo $\rightarrow$ Veicolo.id} \\
             \hline
             Veicolo(\underline{id}, nome, potenza, max\_velocita, scuderia) & \makecell[l]{scuderia $\rightarrow$ Scuderia.ragione\_sociale} \\ % AGGIORNARE ER -> E' STATO AGGIUNTO IL CAMPO NOME
             \hline
@@ -693,7 +701,7 @@ Tale approccio rende scomodo lavorare con le due entità, per tale ragione è st
             \hline
             Investe(\underline{sponsor}, \underline{scuderia}) & \makecell[l]{sponsor $\rightarrow$ Sponsor.ragione\_sociale \\ scuderia $\rightarrow$ Scuderia.ragione\_sociale } \\
             \hline
-            Penalizza(\underline{giro}, \underline{infrazione}, penalita) & \makecell[l]{giro $\rightarrow$ Giro.id \\ infrazione $\rightarrow$ Infrazione.nome} \\
+            Penalizza(\underline{id}, giro, infrazione, penalita) & \makecell[l]{giro $\rightarrow$ Giro.id \\ infrazione $\rightarrow$ Infrazione.nome} \\
             \hline
             Opera(\underline{pitstop}, \underline{meccanico}) & \makecell[l]{pitstop $\rightarrow$ Pitstop.giro \\ meccanico $\rightarrow$ Meccanico.codice\_fiscale} \\
             \hline

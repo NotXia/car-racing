@@ -79,7 +79,7 @@ CREATE TABLE Veicolo(
 CREATE TABLE Controllo(
     veicolo INTEGER REFERENCES Veicolo(id),
     data_ora DATETIME,
-    esito CHAR(50) NOT NULL,
+    esito BOOLEAN NOT NULL,
     supervisore CHAR(50) REFERENCES Supervisore(codice_fiscale),
     PRIMARY KEY (veicolo, data_ora)
 );
