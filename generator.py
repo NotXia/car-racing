@@ -83,7 +83,7 @@ def penaltyGenerator(laps):
                 gen_penalties.append({
                     "lap": lap["id"], 
                     "reason": random.choice(penalties),
-                    "time": random.randint(1000, 20000)
+                    "time": random.choice([3000, 5000, 10000, 15000, 20000, 25000, 30000, 60000])
                 })
 
     return gen_penalties
