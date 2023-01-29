@@ -579,13 +579,12 @@ La chiave dell'entità Giro comprende l'insieme degli attributi numero del giro,
 Tale approccio rende scomodo lavorare con le due entità, per tale ragione è stato deciso di introdurre un identificatore per l'entità Giro che svolge la funzione di chiave.
 
 \subsubsection{Ristrutturazione relazione Penalizza}
-L'associazione Penalizza...
+L'associazione Penalizza associa una Infrazione ad un Giro.\\
+Poiché ad un Giro possono essere associati più Infrazioni dello stesso tipo, si è ritenuto più chiaro "promuovere" l'associazione Penalizza in una entità definita come segue:
 
 \begin{figure}[H]
     \centering
-    \makebox[0cm]{
-        \includegraphics[width=17cm]{../er/finale.pdf}
-    }
+    \includegraphics[width=7cm]{../er/penalizza.pdf}
 \end{figure}
 
 \subsection{Normalizzazione}
@@ -616,11 +615,13 @@ Tutte le associazioni dello schema concettuale ristrutturato risultano in forma 
         \hline
         Controllo & \par{L'unica dipendenza funzionale non banale è \{ data e ora, id dell'auto \} $\rightarrow$ resto degli attributi} \\
         \hline
-        Gara & \makecell{%
-            Esiste una dipendenza funzionale non banale tra la pista e il numero dei giri.\\
-            In quanto il numero di giri è definito in relazione alle caratteristiche della pista.
-            % \includegraphics[width=5cm]{../er/finale.pdf}
-            % \rowincludegraphics[scale=0.1]{../er/norm_pista.pdf}
+        Gara & \makecell[l]{
+            \parbox[t]{\linewidth}{
+                Esiste una dipendenza funzionale non banale tra la pista e il numero dei giri.\\
+                È infatti ragionevole assumere che il numero di giri di una gara sia definito in relazione alle caratteristiche della pista.\\
+                Si procede quindi a spostare il numero dei giri da Gara in Pista.
+            }\\
+            \includegraphics[width=8cm]{../er/norm_pista.pdf}
         } \\
         \hline
         Pista & \par{L'unica dipendenza funzionale non banale è tra il nome della pista e il resto degli attributi} \\
@@ -635,6 +636,15 @@ Tutte le associazioni dello schema concettuale ristrutturato risultano in forma 
         \hline
     \end{tabular}
 \end{center}
+Le entità così definite sono in forma normale di Boyce e Codd.
+
+\subsubsection{Schema finale ristrutturato}
+\begin{figure}[H]
+    \centering
+    \makebox[0cm]{
+        \includegraphics[width=18cm]{../er/finale.pdf}
+    }
+\end{figure}
 
 \subsection{Traduzione verso il modello relazionale}
 
