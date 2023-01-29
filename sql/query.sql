@@ -38,7 +38,7 @@ SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia, COUNT(GiroReale.id) AS n
 FROM GiroReale INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
     INNER JOIN Contratto ON Pilota.codice_fiscale = Contratto.pilota
     INNER JOIN Gara ON GiroReale.gara = Gara.nome
-WHERE GiroReale.gara = 'Belgian Grand Prix' AND
+WHERE GiroReale.gara = 'Australian Grand Prix' AND
     (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine)
 GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
 ORDER BY num_giri DESC, tempo_gara ASC;
@@ -52,17 +52,25 @@ WHERE GiroReale.gara = 'Australian Grand Prix' AND
     (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine)
 GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
 HAVING SUM(GiroReale.tempo_totale) = (
-        SELECT SUM(GiroReale.tempo_totale) AS tempo_gara -- !!!!!!!!!!!!!!!!!!!!!! Non necessariamente, controllare anche numero giri
+        SELECT SUM(GiroReale.tempo_totale) AS tempo_gara
         FROM GiroReale
         WHERE GiroReale.gara = 'Australian Grand Prix'
         GROUP BY GiroReale.pilota
-        ORDER BY COUNT(GiroReale.pilota) DESC, tempo_gara ASC
+        ORDER BY COUNT(GiroReale.id) DESC, tempo_gara ASC
+    ) AND
+    COUNT(GiroReale.id) = (
+        SELECT COUNT(GiroReale.id) AS num_giri
+        FROM GiroReale
+        WHERE GiroReale.gara = 'Australian Grand Prix'
+        GROUP BY GiroReale.pilota
+        ORDER BY num_giri DESC, SUM(GiroReale.tempo_totale) ASC
     )
-ORDER BY COUNT(GiroReale.pilota) DESC, SUM(GiroReale.tempo_totale) ASC;
+ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
 
--- Visualizzare in ordine decrescente i piloti e il loro numero di vittorie !!!!!!!!!!!!!!!! E i piloti senza vittorie?
-SELECT Pilota.nome, Pilota.cognome, Pilota.codice_fiscale, COUNT(*) AS vittorie
-FROM Pilota INNER JOIN (SELECT GiroReale.pilota, GiroReale.gara
+-- Visualizzare in ordine decrescente i piloti e il loro numero di vittorie
+CREATE VIEW IF NOT EXISTS Vincitore AS
+SELECT Pilota.nome, Pilota.cognome, Pilota.codice_fiscale, COUNT(vincitori.gara) AS vittorie
+FROM Pilota LEFT OUTER JOIN (SELECT GiroReale.pilota, GiroReale.gara
                         FROM GiroReale
                         GROUP BY GiroReale.gara, GiroReale.pilota
                         HAVING SUM(GiroReale.tempo_totale) = (
@@ -83,9 +91,7 @@ FROM Pilota INNER JOIN (SELECT GiroReale.pilota, GiroReale.gara
 GROUP BY Pilota.codice_fiscale
 ORDER BY vittorie DESC;
 
-
--- Visualizzare la scuderia con il maggior numero di vittorie
-
+SELECT * FROM Vincitore;
 
 -- Visualizzare lo sponsor più presente
 SELECT sponsor.ragione_sociale, COUNT(*) AS num_comparse
@@ -125,13 +131,24 @@ WHERE (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine) AND
         FROM Pitstop
         ORDER BY Pitstop.tempo_operazione LIMIT 1
     );
+    
+-- Visualizzare il pilota più giovane ad aver vinto una gara
+SELECT Pilota.nome, Pilota.cognome, Pilota.data_nascita
+FROM Vincitore INNER JOIN Pilota ON Vincitore.codice_fiscale = Pilota.codice_fiscale
+WHERE Vincitore.vittorie > 0 AND
+    Pilota.data_nascita = (
+    SELECT Pilota.data_nascita
+    FROM Vincitore INNER JOIN Pilota ON Vincitore.codice_fiscale = Pilota.codice_fiscale
+    WHERE Vincitore.vittorie > 0
+    ORDER BY Pilota.data_nascita DESC LIMIT 1
+    );
+
+-- Visualizzare la lunghezza media, massima e minima delle piste
+SELECT AVG(lunghezza), MAX(lunghezza), MIN(lunghezza)
+FROM Pista;
 
 -- Incrementare la potenza e la velocità massima dei veicoli di una data scuderia
--- DA COMPLETARE
 UPDATE Veicolo
 SET potenza = potenza + 50,
     max_velocita = max_velocita + 5
-WHERE Veicolo.id = (
-    SELECT Veicolo.id
-    FROM Veicolo INNER JOIN 
-    )
+WHERE Veicolo.scuderia = 'Ferrari';
