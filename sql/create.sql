@@ -87,10 +87,8 @@ CREATE TABLE Controllo(
 CREATE TABLE Gara(
     nome CHAR(50) PRIMARY KEY,
     data_ora DATETIME NOT NULL,
-    num_giri TINYINT NOT NULL,
     sponsor CHAR(50) REFERENCES Sponsor(ragione_sociale),
-    pista CHAR(50) REFERENCES Pista(nome),
-    CHECK (num_giri > 0)
+    pista CHAR(50) REFERENCES Pista(nome)
 );
 
 CREATE TABLE Pista(
@@ -99,7 +97,8 @@ CREATE TABLE Pista(
     citta CHAR(50) NOT NULL,
     lunghezza INTEGER NOT NULL,
     num_posti INTEGER NOT NULL,
-    CHECK (lunghezza > 0 AND num_posti >= 0)
+    num_giri TINYINT NOT NULL,
+    CHECK (lunghezza > 0 AND num_posti >= 0 AND num_giri > 0)
 );
 
 CREATE TABLE Giro(
