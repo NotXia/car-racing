@@ -3,26 +3,26 @@ INSERT INTO Scuderia (ragione_sociale, colore, nazione, anno_fondazione) VALUES
     ('<ragione sociale>', '<colore>', '<nazione>', <anno fondazione>);
 
 INSERT INTO Veicolo (id, nome, potenza, max_velocita, scuderia) VALUES 
-    (NULL, '<nome>', <potenza>, <velocità max>, '<ragione sociale scuderia>'),
+    (NULL, '<nome>', <potenza>, <velocità max>, '<ragione sociale scuderia>');
 
 
 -- Inserire una nuova gara
 INSERT INTO Gara (nome, data_ora, sponsor, pista) VALUES 
-    ('<nome>', '<data e ora>', <sponsor o NULL>, '<nome pista>'),
+    ('<nome>', '<data e ora>', <sponsor o NULL>, '<nome pista>');
 
 
 -- Inserire il tempo di un giro del pilota sulla pista
 INSERT INTO Giro (id, numero, tempo, gara, pilota) VALUES 
-    (NULL, <numero>, <tempo>, '<nome gara>', '<codice fiscale pilota>'),
+    (NULL, <numero>, <tempo>, '<nome gara>', '<codice fiscale pilota>');
 
 -- Inserire il tempo pit stop
 INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES 
-    (<id giro>, <tempo operazione>, <tempo totale>),
+    (<id giro>, <tempo operazione>, <tempo totale>);
 
 
 -- Inserire un nuovo contratto tra pilota e scuderia
 INSERT INTO Contratto (numero, data_inizio, data_fine, numero_pilota, pilota, scuderia, veicolo) VALUES 
-    (NULL, '<data inizio>', '<data fine>', <numero pilota>, '<codice fiscale pilota>', '<ragione sociale scuderia>', <id veicolo>),
+    (NULL, '<data inizio>', '<data fine>', <numero pilota>, '<codice fiscale pilota>', '<ragione sociale scuderia>', <id veicolo>);
 
 
 -- Incrementare la potenza e la velocità massima dei veicoli di una data scuderia
@@ -120,6 +120,7 @@ SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia
 FROM GiroReale INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
     INNER JOIN Contratto ON Pilota.codice_fiscale = Contratto.pilota
     INNER JOIN Gara ON GiroReale.gara = Gara.nome
+    INNER JOIN Pista ON Gara.pista = Pista.nome
 WHERE GiroReale.gara = 'Australian Grand Prix' AND
     (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine)
 GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
@@ -130,13 +131,7 @@ HAVING SUM(GiroReale.tempo_totale) = (
         GROUP BY GiroReale.pilota
         ORDER BY COUNT(GiroReale.id) DESC, tempo_gara ASC LIMIT 1
     ) AND
-    COUNT(GiroReale.id) = (
-        SELECT COUNT(GiroReale.id) AS num_giri
-        FROM GiroReale
-        WHERE GiroReale.gara = 'Australian Grand Prix'
-        GROUP BY GiroReale.pilota
-        ORDER BY num_giri DESC, SUM(GiroReale.tempo_totale) ASC LIMIT 1
-    )
+    COUNT(GiroReale.id) = Pista.num_giri
 ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
 
 
@@ -144,7 +139,8 @@ ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
 CREATE VIEW IF NOT EXISTS Vincitore AS
 SELECT Pilota.nome, Pilota.cognome, Pilota.codice_fiscale, COUNT(vincitori.gara) AS vittorie
 FROM Pilota LEFT OUTER JOIN (SELECT GiroReale.pilota, GiroReale.gara
-                        FROM GiroReale
+                        FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
+                                       INNER JOIN Pista ON Gara.pista = Pista.nome
                         GROUP BY GiroReale.gara, GiroReale.pilota
                         HAVING SUM(GiroReale.tempo_totale) = (
                                 SELECT SUM(GR.tempo_totale)
@@ -153,13 +149,7 @@ FROM Pilota LEFT OUTER JOIN (SELECT GiroReale.pilota, GiroReale.gara
                                 GROUP BY GR.pilota
                                 ORDER BY COUNT(GR.id) DESC, SUM(GR.tempo_totale) ASC LIMIT 1
                             ) AND
-                            COUNT(GiroReale.id) = (
-                                SELECT COUNT(GR.id)
-                                FROM GiroReale AS GR
-                                WHERE GR.gara = GiroReale.gara
-                                GROUP BY GR.pilota
-                                ORDER BY COUNT(GR.id) DESC, SUM(GR.tempo_totale) ASC LIMIT 1
-                            )
+                            COUNT(GiroReale.id) = Pista.num_giri
     ) AS vincitori ON Pilota.codice_fiscale = vincitori.pilota
 GROUP BY Pilota.codice_fiscale
 ORDER BY vittorie DESC;
