@@ -1033,7 +1033,7 @@ SELECT AVG(lunghezza) AS Media, MAX(lunghezza) AS Massimo, MIN(lunghezza) AS Min
 FROM Pista;
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1051,7 +1051,7 @@ FROM Gara AS G INNER JOIN Sponsor AS S ON G.sponsor = S.ragione_sociale
 WHERE G.nome = '<Nome gara>';
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1081,7 +1081,7 @@ HAVING num_comparse = (
 );
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|}
     \hline
@@ -1102,7 +1102,7 @@ WHERE ('<Data>' BETWEEN C.data_inizio AND C.data_fine) AND
       C.pilota = '<Codice fiscale pilota>';
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|}
     \hline
@@ -1122,7 +1122,7 @@ WHERE S.ragione_sociale = '<Ragione sociale scuderia>' AND
       (date('now') BETWEEN C.data_inizio AND C.data_fine);
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1145,7 +1145,7 @@ WHERE P.gara = '<Nome gara>' AND
 ORDER BY C.scuderia;
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1192,7 +1192,7 @@ SELECT * FROM GiroReale;
 \end{lstlisting}
 
 \begin{center}
-    \begin{table}[!ht]
+    \begin{table}[H]
         \centering
         \begin{tabular}{|l|l|l|l|l|}
             \hline
@@ -1221,7 +1221,7 @@ WHERE Gara.pista = '<Nome pista>' AND
       );
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1245,7 +1245,7 @@ GROUP BY GiroReale.pilota, Pilota.nome, Pilota.cognome, Contratto.scuderia
 ORDER BY num_giri DESC, tempo_gara ASC;
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|l|l|}
     \hline
@@ -1296,7 +1296,7 @@ HAVING SUM(GiroReale.tempo_totale) = (
 ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1332,7 +1332,7 @@ ORDER BY vittorie DESC;
 SELECT * FROM Vincitore;
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|l|}
     \hline
@@ -1374,7 +1374,7 @@ WHERE Vincitore.vittorie > 0 AND
    );
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1398,7 +1398,7 @@ WHERE (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine) AND
                                   FROM Pitstop);
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|l|l|}
     \hline
@@ -1422,7 +1422,7 @@ HAVING COUNT(*) = (SELECT COUNT(*)
                    ORDER BY COUNT(*) DESC LIMIT 1);
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
@@ -1446,7 +1446,7 @@ HAVING COUNT(*) = (SELECT COUNT(*)
                    ORDER BY COUNT(*) DESC LIMIT 1);
 \end{lstlisting}
 
-\begin{table}[!ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|}
     \hline
@@ -1457,5 +1457,16 @@ HAVING COUNT(*) = (SELECT COUNT(*)
 
 
 \section{Testing}
+Un'istanza popolata del database è raggiungibile al link \href{https://tcxia.ddns.net/sql/}{\texttt{https://tcxia.ddns.net/sql/}}.
+Le credenziali di accesso sono le seguenti:\\
+\begin{center}
+    \begin{tabular}{l l}
+        \textbf{Username} & user \\
+        \textbf{Password} & Unibodb2223! \\
+    \end{tabular}
+\end{center}
+
+In alternativa, assieme alla consegna di questa relazione, è presente una copia del database sqlite.
+
 
 \end{document}
