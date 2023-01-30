@@ -492,7 +492,7 @@ Per chiarezza, nello schema finale, le gerarchie sono state eliminate anticipata
     \item Il veicolo assegnato in un contratto deve appartenere alla scuderia che lo emette.
 \end{enumerate}
 
-\subsubsection{Regole di vincolo}
+\subsubsection{Regole di derivazione}
 \begin{enumerate}[label={RD \arabic*}, leftmargin=4em]
     \item Il tempo totale impiegato per un giro è dato dalla somma del tempo del giro sommato a quello dell'eventuale pit stop e possibili penalità.
     \item Il vincitore di una gara è il pilota che ha completato il numero di giri previsti nel minor tempo complessivo. In caso di pareggio, si considerano più vincitori.
@@ -647,10 +647,11 @@ Poiché ad un Giro possono essere associati più Infrazioni dello stesso tipo, s
 \end{figure}
 
 \subsection{Normalizzazione}
+
 \subsubsection{Associazioni}
 Tutte le associazioni dello schema concettuale ristrutturato risultano in forma normale di Boyce e Codd in quanto binarie.
 
-\subsection{Entità}
+\subsubsection{Entità}
 \begin{center}
     \def\arraystretch{1.2}%
     \begin{tabular}{ |p{2cm}|p{14.5cm}| }
@@ -697,7 +698,7 @@ Tutte le associazioni dello schema concettuale ristrutturato risultano in forma 
 \end{center}
 Le entità così definite sono in forma normale di Boyce e Codd.
 
-\subsubsection{Schema finale ristrutturato}
+\subsection{Schema finale ristrutturato}
 \begin{figure}[H]
     \centering
     \makebox[0cm]{
