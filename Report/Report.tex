@@ -849,7 +849,7 @@ CREATE TABLE Meccanico(
     luogo_nascita VARCHAR(100) NOT NULL,
     ruolo VARCHAR(100) NOT NULL,
     scuderia VARCHAR(100) NOT NULL REFERENCES Scuderia(ragione_sociale) 
-        ON DELETE CASCADE ON UPDATE CASCADE
+                                   ON DELETE CASCADE ON UPDATE CASCADE
 );
 \end{lstlisting}
 
@@ -888,11 +888,11 @@ CREATE TABLE Contratto(
     data_fine DATETIME NOT NULL,
     numero_pilota TINYINT NOT NULL,
     pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale) 
-        ON DELETE RESTRICT ON UPDATE CASCADE,
+                        ON DELETE RESTRICT ON UPDATE CASCADE,
     scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale) 
-        ON DELETE RESTRICT ON UPDATE CASCADE,
-    veicolo INTEGER REFERENCES Veicolo(id) ON DELETE RESTRICT 
-        ON UPDATE CASCADE,
+                          ON DELETE RESTRICT ON UPDATE CASCADE,
+    veicolo INTEGER REFERENCES Veicolo(id) 
+                    ON DELETE RESTRICT ON UPDATE CASCADE,
     CHECK (data_fine > data_inizio AND numero_pilota > 0)
 );
 \end{lstlisting}
@@ -904,7 +904,7 @@ CREATE TABLE Veicolo(
     potenza INTEGER NOT NULL,
     max_velocita INTEGER NOT NULL,
     scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale) 
-        ON DELETE CASCADE ON UPDATE CASCADE,
+                          ON DELETE CASCADE ON UPDATE CASCADE,
     CHECK (potenza > 0 AND max_velocita > 0)
 );
 \end{lstlisting}
@@ -915,7 +915,7 @@ CREATE TABLE Controllo(
     data_ora DATETIME,
     esito BOOLEAN NOT NULL,
     supervisore VARCHAR(100) REFERENCES Supervisore(codice_fiscale) 
-        ON DELETE SET NULL ON UPDATE CASCADE,
+                             ON DELETE SET NULL ON UPDATE CASCADE,
     PRIMARY KEY (veicolo, data_ora)
 );
 \end{lstlisting}
@@ -926,9 +926,9 @@ CREATE TABLE Gara(
     nome VARCHAR(100) PRIMARY KEY,
     data_ora DATETIME NOT NULL,
     sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale) 
-        ON DELETE RESTRICT ON UPDATE CASCADE,
+                         ON DELETE RESTRICT ON UPDATE CASCADE,
     pista VARCHAR(100) REFERENCES Pista(nome) 
-        ON DELETE RESTRICT ON UPDATE CASCADE
+                       ON DELETE RESTRICT ON UPDATE CASCADE
 );
 \end{lstlisting}
 
@@ -950,9 +950,9 @@ CREATE TABLE Giro(
     numero INTEGER NOT NULL,
     tempo INTEGER NOT NULL,
     gara VARCHAR(100) REFERENCES Gara(nome) 
-        ON DELETE RESTRICT ON UPDATE CASCADE,
+                      ON DELETE RESTRICT ON UPDATE CASCADE,
     pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale) 
-        ON DELETE RESTRICT ON UPDATE CASCADE,
+                        ON DELETE RESTRICT ON UPDATE CASCADE,
     CHECK (numero > 0 AND tempo > 0)
 );
 \end{lstlisting}
@@ -967,7 +967,7 @@ CREATE TABLE Infrazione(
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Pitstop(
     giro INTEGER PRIMARY KEY REFERENCES Giro(id) 
-        ON DELETE CASCADE ON UPDATE CASCADE,
+                             ON DELETE CASCADE ON UPDATE CASCADE,
     tempo_operazione INTEGER NOT NULL,
     tempo_totale INTEGER NOT NULL,
     CHECK (tempo_operazione > 0 AND tempo_totale > tempo_operazione)
@@ -977,9 +977,9 @@ CREATE TABLE Pitstop(
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Partecipa(
     gara VARCHAR(100) REFERENCES Gara(nome) 
-        ON DELETE CASCADE ON UPDATE CASCADE,
+                      ON DELETE CASCADE ON UPDATE CASCADE,
     pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale) 
-        ON DELETE RESTRICT ON UPDATE CASCADE,
+                        ON DELETE RESTRICT ON UPDATE CASCADE,
     PRIMARY KEY (gara, pilota)
 );
 \end{lstlisting}
@@ -1154,7 +1154,7 @@ WHERE ('<Data>' BETWEEN C.data_inizio AND C.data_fine) AND
     \centering
     \begin{tabular}{|l|}
     \hline
-        scuderia \\ \hline
+        \textbf{scuderia} \\ \hline
         Red Bull \\ \hline
     \end{tabular}
 \end{table}
@@ -1174,7 +1174,7 @@ WHERE S.ragione_sociale = '<Ragione sociale scuderia>' AND
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
-        cognome & nome & numero\_pilota \\ \hline
+        \textbf{cognome} & \textbf{nome} & \textbf{numero\_pilota} \\ \hline
         Leclerc & Charles & 16 \\ \hline
         Sainz & Carlos & 55 \\ \hline
     \end{tabular}
@@ -1197,7 +1197,7 @@ ORDER BY C.scuderia;
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
-        nome & cognome & scuderia \\ \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{scuderia} \\ \hline
         Valtteri & Bottas & Alfa Romeo \\ \hline
         Zhou & Guanyu & Alfa Romeo \\ \hline
         Pierre & Gasly & AlphaTauri \\ \hline
@@ -1244,7 +1244,7 @@ SELECT * FROM GiroReale;
         \centering
         \begin{tabular}{|l|l|l|l|l|}
             \hline
-            id & pilota & gara & numero & tempo\_totale \\ \hline
+            \textbf{id} & \textbf{pilota} & \textbf{gara} & \textbf{numero} & \textbf{tempo\_totale} \\ \hline
             0 & RSSGRG98B15Z114G & Bahrain Grand Prix & 1 & 179548 \\ \hline
             1 & RSSGRG98B15Z114G & Bahrain Grand Prix & 2 & 63654 \\ \hline
             2 & RSSGRG98B15Z114G & Bahrain Grand Prix & 3 & 125114 \\ \hline
@@ -1274,7 +1274,7 @@ WHERE Gara.pista = '<Nome pista>' AND
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
-        nome & cognome & tempo\_totale \\ \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{tempo\_totale} \\ \hline
         George & Russell & 61749 \\ \hline
     \end{tabular}
 \end{table}
@@ -1298,7 +1298,7 @@ ORDER BY num_giri DESC, tempo_gara ASC;
     \centering
     \begin{tabular}{|l|l|l|l|l|}
     \hline
-        nome & cognome & scuderia & num\_giri & tempo\_gara \\ \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{scuderia} & \textbf{num\_giri} & \textbf{tempo\_gara} \\ \hline
         Lewis & Hamilton & Mercedes & 5 & 457808 \\ \hline
         Alexander & Albon & Williams & 5 & 466535 \\ \hline
         Pierre & Gasly & AlphaTauri & 5 & 474886 \\ \hline
@@ -1349,7 +1349,7 @@ ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
     \centering
     \begin{tabular}{|l|l|l|}
     \hline
-        nome & cognome & scuderia \\ \hline
+        \textbf{nome} & \textbf{cognome} & \textbf{scuderia} \\ \hline
         Lewis & Hamilton & Mercedes \\ \hline
     \end{tabular}
 \end{table}
