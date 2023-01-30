@@ -46,7 +46,7 @@
     keepspaces=true,
     showstringspaces=false,
     showspaces=false,
-    showtabs=false,
+    showtabs=false
 }
 \lstset{style=sqlstyle}
 
@@ -103,79 +103,108 @@
 
 
 \section{Analisi dei requisiti}
-\subsection{Requisiti espressi in linguaggio naturale \textbf{RIFRASARE IN FUTURO, E' GIUSTIFICATO IL TESTO?}}
+\subsection{Requisiti espressi in linguaggio naturale}
 Si vuole realizzare un database per gestire un campionato di gare automobilistiche. \\
 È necessario codificare le gare, le piste su cui si svolgono, i dati relativi ai giri, eventuali infrazioni e i dati sui pit stop. \\
 Inoltre, si vogliono memorizzare i dati dei piloti che partecipano e i contratti (presenti e passati) che stipulano con le scuderie. Oltre ai dati relativi alle scuderie, è richiesto registrarne le auto e i meccanici. \\
 Infine, si vuole tenere traccia dei controlli di regolarità effettuati dai supervisori (della società che organizza il campionato) e dei dati degli sponsor delle gare e delle singole scuderie. \\[1em]
 
-Per le gare si vuole memorizzare il nome, la data di svolgimento, la pista su cui si corre, il numero di giri previsti, i piloti partecipanti e l'eventuale sponsor. \\
-Per le piste si vogliono rappresentare il nome, la nazione e la città di collocazione, la lunghezza (in metri), numero di posti a sedere per gli spettatori. \\
-Per i giri si vogliono salvare il tempo impiegato (in secondi), il numero del giro, la gara di appartenenza, il pilota che effettua il giro. \\
-Per le infrazioni si vogliono gestire i dati riguardanti il nome e la descrizione e vengono assegnate ad un giro di un pilota sottoforma di penalità (in secondi). \\
-Per i pit stop si vogliono rappresentare il tempo delle operazioni, il tempo complessivo (tempo di entrata e uscita + tempo delle operazioni), il giro in cui viene il pilota che viene chiamato ai box e i meccanici che effettuano le operazioni. \\
-Per i piloti si vogliono memorizzare il nome, cognome, luogo e data di nascita. \\
-Per i contratti si vogliono rappresentare il numero identificativo, il pilota ed il suo numero identificativo, la scuderia, la data d'inizio e di fine, l'auto assegnata e il valore di ingaggio. \\
-Per le scuderie si vogliono gestire i dati riguardo la ragione sociale, la nazione della sede principale, l'anno di fondazione, il colore caratterizzante e i vari sponsor. \\ 
-Per le auto si vogliono salvare la potenza (in cavalli), velocità massima raggiungibile, la scuderia di appartenenza. \\
-Per i meccanici si vogliono memorizzare il nome, cognome, luogo, data di nascita, il ruolo e la scuderia di appartenenza. \\
-Per i controlli di regolarità si vogliono tracciare i dati riguardo la data e l'ora, l'auto coinvolta, il supervisore e l'esito. \\
-Per i supervisori si vogliono memorizzare il nome, cognome, luogo, data di nascita. \\
-Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda, il capitale investito e la nazione della sede principale.
-
-\subsection{Glossario dei termini \textbf{RIVEDERE COLLEGAMENTI}}
+\subsection{Glossario dei termini}
 \begin{tabularx}{\linewidth}{
-        |>{\hsize=0.9\hsize}X|% 10% of 4\hsize 
+        |>{\hsize=0.6\hsize}X|% 10% of 4\hsize 
         >{\hsize=1.8\hsize}X|% 30% of 4\hsize
         >{\hsize=0.6\hsize}X|% 30% of 4\hsize 
-        >{\hsize=0.7\hsize}X|% 30% of 4\hsize
+        >{\hsize=1.0\hsize}X|% 30% of 4\hsize
            % sum=4.0\hsize for 4 columns
     }
     \hline
     \textbf{Termine} & \textbf{Descrizione} & \textbf{Sinonimi} & \textbf{Collegamenti} \\
     \hline
-    Società organizzante & Azienda che organizza un campionato & - & \\
+    Società organizzante & Azienda che organizza un campionato & - & Campionato \\
     \hline
     Campionato & Numero definito di gare con classifica & - & Gare \\
     \hline
-    Gare & Competizione in cui partecipa un numero fissato di piloti che effettuano un numero definito di giri di pista sul proprio veicolo & Competizione & Piste, giri, piloti, sponsor \\
+    Gare & Competizione in cui partecipa un numero fissato di piloti che effettuano un numero definito di giri di pista sul proprio veicolo & Competizione & Piste, giri, piloti, scuderie, sponsor \\
     \hline
-    Giri & Percorrenza intera di una pista effettuata da un pilota & - & Pilota, gara \\
+    Giri & Percorrenza intera di una pista effettuata da un pilota & - & Piloti, gare, veicoli, pit stop, infrazioni \\
     \hline
-    Piste & Località asfaltata idonea al passaggio di veicoli ad elevata velocità & - & \\
+    Piste & Località asfaltata idonea al passaggio di veicoli ad elevata velocità & - & Gare \\
     \hline
-    Infrazioni & Eventi irregolari accaduti durante una gara & - & Penalità, giro, pilota \\
+    Infrazioni & Eventi irregolari accaduti durante una gara & - & Penalità \\
     \hline
-    Penalità & Tempo ulteriore assegnato come malus al tempo totale & - & \\
+    Penalità & Tempo ulteriore assegnato come malus al tempo totale & - & Infrazioni, giri, piloti \\
     \hline
-    Veicolo & Autoveicolo ad elevata velocità & Auto & Scuderia \\
+    Veicoli & Autoveicolo ad elevata velocità & Auto & Scuderie, contratti \\
     \hline
-    Piloti & Persona che guida un veicolo ad elevata velocità & - & \\
+    Piloti & Persona che guida un veicolo ad elevata velocità & - & Contratti, gare \\
     \hline
-    Scuderie & Azienda proprietaria di veicoli & - & Sponsor \\
+    Scuderie & Azienda proprietaria di veicoli & - & Sponsor, contratti, meccanici, veicoli \\
     \hline
-    Meccanici & Impiegati delle scuderie adibiti alla manutenzione dell'auto & - & Scuderia \\
+    Meccanici & Impiegati delle scuderie adibiti alla manutenzione dell'auto & - & Scuderie, pit stop \\
     \hline
-    Supervisori & Impiegati della società organizzante adibiti ai controlli di regolarità & - & \\
+    Supervisori & Impiegati della società organizzante adibiti ai controlli di regolarità & - & Controlli, società organizzante \\
     \hline
-    Controlli di regolarità & Controlli effettuati dalla società organizzatrice per garantire la regolarità dei veicoli & Controlli & Supervisore \\
+    Controlli di regolarità & Controlli effettuati dalla società organizzante per garantire la regolarità dei veicoli & Controlli & Supervisori, veicoli \\
     \hline
-    Sponsor & Azienda che investe per apparire in gare e/o in scuderie & - & \\
+    Sponsor & Azienda che investe per apparire in gare e/o in scuderie & - & Gare, scuderie \\
     \hline
-    Pit stop & Fase di un giro in cui l'auto sosta in un'apposita area di pista dove i meccanici effettuano operazioni all'auto & - & Giro, pilota, meccanici \\
+    Pit stop & Fase di un giro in cui l'auto sosta in un'apposita area di pista dove i meccanici effettuano operazioni all'auto & Box & Giri, piloti, meccanici \\
     \hline
-    Contratto & Accordo stipulato tra un pilota e una scuderia per gareggiare in un campionato & - & Pilota, scuderia \\
+    Contratto & Accordo stipulato tra un pilota e una scuderia per gareggiare in un campionato & - & Piloti, scuderie, veicoli \\
     \hline
 \end{tabularx}
 
-\subsection{Eliminazione delle ambiguità presenti}
+% \subsection{Eliminazione delle ambiguità presenti}
 \subsection{Strutturazione dei requisiti}
-\subsection{Specifica operazioni}
+
+\subsubsection*{Frasi relative alle gare}
+Per le gare si vuole memorizzare il nome, la data di svolgimento, la pista su cui si corre, il numero di giri previsti, i piloti partecipanti e l'eventuale sponsor.
+
+\subsubsection*{Frasi relative alle piste}
+Per le piste si vogliono rappresentare il nome, la nazione e la città di collocazione, la lunghezza (in metri) e numero di posti a sedere per gli spettatori.
+
+\subsubsection*{Frasi relative ai giri}
+Per i giri si vogliono salvare il tempo impiegato (in millisecondi), il numero del giro, la gara di appartenenza e il pilota che effettua il giro.
+
+\subsubsection*{Frasi relative alle infrazioni}
+Per le infrazioni si vogliono gestire i dati riguardanti il nome e la descrizione e vengono assegnate ad un giro di un pilota sottoforma di penalità (in millisecondi).
+
+\subsubsection*{Frasi relative ai pit stop}
+Per i pit stop si vogliono rappresentare il tempo delle operazioni (in millisecondi), il tempo complessivo (tempo di entrata e uscita + tempo delle operazioni, in millisecondi), 
+il giro in cui il pilota viene chiamato ai box e i meccanici che effettuano le operazioni.
+
+\subsubsection*{Frasi relative ai piloti}
+Per i piloti si vogliono memorizzare il codice fiscale, nome, cognome, luogo e data di nascita.
+
+\subsubsection*{Frasi relative ai contratti}
+Per i contratti si vogliono rappresentare il numero identificativo, il pilota ed il suo numero identificativo, la scuderia, 
+la data d'inizio e di fine e l'auto assegnata.
+
+\subsubsection*{Frasi relative alle scuderie}
+Per le scuderie si vogliono gestire i dati riguardo la ragione sociale, la nazione della sede principale, l'anno di fondazione, il colore caratterizzante e i vari sponsor.
+
+\subsubsection*{Frasi relative ai veicoli}
+Per i veicoli si vogliono salvare la potenza (in cavalli), velocità massima raggiungibile, la scuderia di appartenenza e il nome del telaio.
+
+\subsubsection*{Frasi relative ai meccanici}
+Per i meccanici si vogliono memorizzare il codice fiscale, nome, cognome, luogo, data di nascita, il ruolo e la scuderia di appartenenza.
+
+\subsubsection*{Frasi relative ai controlli}
+Per i controlli di regolarità si vogliono tracciare i dati riguardo la data e l'ora, l'auto coinvolta, il supervisore e l'esito.
+
+\subsubsection*{Frasi relative ai supervisori}
+Per i supervisori si vogliono memorizzare il codice fiscale, nome, cognome, luogo, data di nascita.
+
+\subsubsection*{Frasi relative agli sponsor}
+Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda, il capitale investito e la nazione della sede principale.
+
+
+\subsection{Specifiche operazioni}
 \begin{enumerate}
     \item Inserire una nuova scuderia (in media 1 volta ogni cinque anni)
     \item Inserire una nuova gara (in media 1 volta all'anno)
     \item Inserire il tempo di un giro del pilota sulla pista ($\sim$1000 volte per gara)
-    \item Inserire il tempo pit stop (almeno 20 volte per gara)
+    \item Inserire il tempo pit stop ($\sim$20-60 volte per gara)
     \item Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno)
     \item Incrementare la potenza e la velocità massima dei veicoli di una data scuderia (in media 2 volte all'anno)
     \item Visualizzare la lunghezza media, massima e minima delle piste (1 volta all'anno)
@@ -196,7 +225,7 @@ Per gli sponsor si vogliono salvare la ragione sociale, la tipologia di azienda,
 \end{enumerate}
 
 \section{Progettazione concettuale}
-È stato seguito un approccio bottom-up per definire i macro-argomenti.\\
+È stato seguito un approccio bottom-up per identificare i macro-argomenti.\\
 Sono quindi state individuate le seguenti categorie:
 \begin{itemize}
     \item Persone
@@ -204,7 +233,6 @@ Sono quindi state individuate le seguenti categorie:
     \item Partecipanti: cattura i concetti relativi alle scuderie e ai piloti.
     \item Competizione: cattura i concetti relativi allo svolgimento della gara.
 \end{itemize}
-\subsection{Identificazione delle entità e relazioni}
 
 \subsection{Definizioni delle entità generalizzabili}
 Le entità generalizzabili sono le persone e le aziende.
@@ -224,20 +252,22 @@ Come aziende, sono state identificate le entità scuderia e sponsor.
 
 \subsection{Definizioni dei macro-argomenti}
 \subsubsection{Definizioni dei partecipanti}
-Riguardo i partecipanti, con approccio inside-out, sono state identificate le entità: scuderia, contratto, veicolo, controllo. Oltre a pilota, meccanico, supervisore, sponsor.
+Riguardo i partecipanti, con approccio inside-out, sono state identificate le entità: scuderia, contratto, veicolo, controllo. Oltre a pilota, meccanico, supervisore e sponsor.
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare_scuderie.pdf}
 \end{figure}
 
 \subsubsection{Definizioni delle competizioni}
-Per il concetto di competizione sono state identificate con approccio inside-out le entità: gara, pista, giro, infrazione, pit stop. Oltre a pilota, meccanico, sponsor.
+Per il concetto di competizione sono state identificate con approccio inside-out le entità: gara, pista, giro, infrazione, pit stop. Oltre a pilota, meccanico e sponsor.
 \begin{figure}[H]
     \centering
     \includegraphics[width=15.5cm]{../er/gare_gara.pdf}
 \end{figure}
 
+\newpage
 \subsection{Schema finale}
+Per chiarezza, nello schema finale, le gerarchie sono state eliminate anticipatamente.
 \begin{figure}[H]
     \centering
     \makebox[0cm]{
@@ -274,20 +304,20 @@ Per il concetto di competizione sono state identificate con approccio inside-out
 
         \hline
         Scuderia &
-        Azienda che stipula contratti con piloti e crea auto da corsa & 
+        Azienda che stipula contratti con piloti e sviluppa auto & 
         \parbox[t]{\linewidth}{Colore (stringa)\\Nazione (stringa)\\Anno di fondazione (numero)} & 
         Ragione sociale (stringa) \\
 
         \hline
         Sponsor &
-        Azienda che investe in gare e scuderie & 
+        Azienda che investe in gare e/o scuderie & 
         \parbox[t]{\linewidth}{Tipologia (stringa)\\Nazione (stringa)} & 
         Ragione sociale (stringa) \\
         
         \hline
         Contratto &
         Documento stipulato tra un pilota e una scuderia & 
-        \parbox[t]{\linewidth}{Data inizio (data)\\Data fine (data)\\Numero pilota (numero)} & 
+        \parbox[t]{\linewidth}{Data inizio (data)\\Data fine (data)\\Numero pilota (numero)\\Auto assegnata [Veicolo]} & 
         Numero contratto (stringa) \\
 
         \hline
@@ -299,13 +329,13 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         \hline
         Controllo &
         Verifica della regolarità di un auto effettuata da un supervisore & 
-        \parbox[t]{\linewidth}{Esito (Booleano)} & 
-        \parbox[t]{\linewidth}{Data e ora (data)\\Id [Veicolo] } \\
+        \parbox[t]{\linewidth}{Esito (booleano)} & 
+        \parbox[t]{\linewidth}{Data e ora (data e ora)\\Id [Veicolo] } \\
 
         \hline
         Gara &
-        Competizione dove 20 piloti gareggiano su una pista un numero di giri prestabilito & 
-        \parbox[t]{\linewidth}{Data (data)\\Numero giri (numero)} & 
+        Competizione dove 20 piloti gareggiano su una pista per un numero di giri prestabilito & 
+        \parbox[t]{\linewidth}{Data e ora (data e ora)\\Numero giri (numero)} & 
         Nome (stringa) \\
 
         \hline
@@ -393,7 +423,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
 
             \hline
             Opera & 
-            Associa i meccanici che lavorano durante la sosta al pit stop & 
+            Associa i meccanici che lavorano durante una sosta al pit stop & 
             \parbox[t]{\linewidth}{Pit stop (1, N)\\Meccanico (0, N)} & 
             \parbox[t]{\linewidth}{-} \\
 
@@ -444,7 +474,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
     }
 \end{center}
 
-\subsection{Regole aziendali [RIVEDERE]}
+\subsection{Regole aziendali}
 \subsubsection{Regole di vincolo}
 \begin{enumerate}[label={RV \arabic*}, leftmargin=4em]
     \item Il numero di giri di una gara deve essere $>0$.
@@ -454,7 +484,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
     \item Il tempo di un giro deve essere essere $>0$. 
     \item Il tempo delle operazioni e tempo totale dei pit stop devono essere $>0$.
     \item Il tempo della penalità deve essere $>0$.
-    \item La potenza e la velocità massima di un veicolo deve essere $>0$.
+    \item La potenza e la velocità massima di un veicolo devono essere $>0$.
     \item In un dato istante, un pilota può avere attivo un solo contratto con una scuderia.
     \item La data di inizio di un contratto deve essere antecedente alla data di fine.
     \item I meccanici che operano ad un pit stop devono appartenere alla stessa scuderia del pilota che effettua il giro.
@@ -563,7 +593,7 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         \hline
         3 & $\sim$1000 volte per gara \\
         \hline
-        4 & Almeno 20 volte per gara \\ 
+        4 & $\sim$20-60 volte per gara \\ 
         \hline
         5 & Poche volte ogni anno \\
         \hline
@@ -575,11 +605,11 @@ Per il concetto di competizione sono state identificate con approccio inside-out
         \hline
         9 & 1 volta all'anno \\
         \hline
-        10 & 1 2 volte all'anno \\
+        10 & 2 volte all'anno \\
         \hline
-        11 & 1 2 volte all'anno \\
+        11 & 2 volte all'anno \\
         \hline
-        12 & 1 3 volte per gara \\
+        12 & 3 volte per gara \\
         \hline
         13 & $\sim$1000 volte per gara \\
         \hline
@@ -648,7 +678,7 @@ Tutte le associazioni dello schema concettuale ristrutturato risultano in forma 
             \parbox[t]{\linewidth}{
                 Esiste una dipendenza funzionale non banale tra la pista e il numero dei giri.\\
                 È infatti ragionevole assumere che il numero di giri di una gara sia definito in relazione alle caratteristiche della pista.\\
-                Si procede quindi a spostare il numero dei giri da Gara in Pista.
+                Si procede quindi a spostare il numero dei giri da Gara a Pista.
             }\\
             \includegraphics[width=8cm]{../er/norm_pista.pdf}
         } \\
@@ -697,7 +727,7 @@ Le entità così definite sono in forma normale di Boyce e Codd.
             \hline
             Contratto & Contratto(\underline{numero}, data\_inizio, data\_fine, numero\_pilota, pilota, scuderia, veicolo) \\
             \hline
-            Veicolo & Veicolo(\underline{id}, potenza, max\_velocita, scuderia) \\
+            Veicolo & Veicolo(\underline{id}, nome, potenza, max\_velocita, scuderia) \\
             \hline
             Controllo & Controllo(\underline{veicolo}, \underline{data\_ora}, esito, supervisore) \\
             \hline
@@ -805,21 +835,20 @@ CREATE TABLE Pilota(
     nome VARCHAR(100) NOT NULL,
     cognome VARCHAR(100) NOT NULL,
     data_nascita DATE NOT NULL,
-    luogo_nascita VARCHAR(100) NOT NULL,
-    CHECK data_nascita < date('now')
+    luogo_nascita VARCHAR(100) NOT NULL
 );
 \end{lstlisting}
 
 \begin{lstlisting}[ language=SQL ]
-    CREATE TABLE Meccanico(
+CREATE TABLE Meccanico(
     codice_fiscale CHAR(20) PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     cognome VARCHAR(100) NOT NULL,
     data_nascita DATE NOT NULL,
     luogo_nascita VARCHAR(100) NOT NULL,
     ruolo VARCHAR(100) NOT NULL,
-    scuderia VARCHAR(100) NOT NULL REFERENCES Scuderia(ragione_sociale),
-    CHECK data_nascita < date('now')
+    scuderia VARCHAR(100) NOT NULL REFERENCES Scuderia(ragione_sociale) 
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 \end{lstlisting}
 
@@ -829,8 +858,7 @@ CREATE TABLE Supervisore(
     nome VARCHAR(100) NOT NULL,
     cognome VARCHAR(100) NOT NULL,
     data_nascita DATE NOT NULL,
-    luogo_nascita VARCHAR(100) NOT NULL,
-    CHECK data_nascita < date('now')
+    luogo_nascita VARCHAR(100) NOT NULL
 );
 \end{lstlisting}
 
@@ -858,9 +886,12 @@ CREATE TABLE Contratto(
     data_inizio DATETIME NOT NULL,
     data_fine DATETIME NOT NULL,
     numero_pilota TINYINT NOT NULL,
-    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
-    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
-    veicolo INTEGER REFERENCES Veicolo(id),
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale) 
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale) 
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    veicolo INTEGER REFERENCES Veicolo(id) ON DELETE RESTRICT 
+        ON UPDATE CASCADE,
     CHECK (data_fine > data_inizio AND numero_pilota > 0)
 );
 \end{lstlisting}
@@ -871,7 +902,8 @@ CREATE TABLE Veicolo(
     nome VARCHAR(100) NOT NULL,
     potenza INTEGER NOT NULL,
     max_velocita INTEGER NOT NULL,
-    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
     CHECK (potenza > 0 AND max_velocita > 0)
 );
 \end{lstlisting}
@@ -881,19 +913,21 @@ CREATE TABLE Controllo(
     veicolo INTEGER REFERENCES Veicolo(id),
     data_ora DATETIME,
     esito BOOLEAN NOT NULL,
-    supervisore VARCHAR(100) REFERENCES Supervisore(codice_fiscale),
-    PRIMARY KEY (veicolo, data_ora),
-    CHECK (data_ora <= date('now'))
+    supervisore VARCHAR(100) REFERENCES Supervisore(codice_fiscale) 
+        ON DELETE SET NULL ON UPDATE CASCADE,
+    PRIMARY KEY (veicolo, data_ora)
 );
 \end{lstlisting}
 
+\newpage
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Gara(
     nome VARCHAR(100) PRIMARY KEY,
     data_ora DATETIME NOT NULL,
-    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale),
-    pista VARCHAR(100) REFERENCES Pista(nome),
-    CHECK (data_ora <= date('now'))
+    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale) 
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    pista VARCHAR(100) REFERENCES Pista(nome) 
+        ON DELETE RESTRICT ON UPDATE CASCADE
 );
 \end{lstlisting}
 
@@ -914,8 +948,10 @@ CREATE TABLE Giro(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     numero INTEGER NOT NULL,
     tempo INTEGER NOT NULL,
-    gara VARCHAR(100) REFERENCES Gara(nome),
-    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
+    gara VARCHAR(100) REFERENCES Gara(nome) 
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale) 
+        ON DELETE RESTRICT ON UPDATE CASCADE,
     CHECK (numero > 0 AND tempo > 0)
 );
 \end{lstlisting}
@@ -929,7 +965,8 @@ CREATE TABLE Infrazione(
 
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Pitstop(
-    giro INTEGER PRIMARY KEY REFERENCES Giro(id),
+    giro INTEGER PRIMARY KEY REFERENCES Giro(id) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
     tempo_operazione INTEGER NOT NULL,
     tempo_totale INTEGER NOT NULL,
     CHECK (tempo_operazione > 0 AND tempo_totale > tempo_operazione)
@@ -938,25 +975,32 @@ CREATE TABLE Pitstop(
 
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Partecipa(
-    gara VARCHAR(100) REFERENCES Gara(nome),
-    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale),
+    gara VARCHAR(100) REFERENCES Gara(nome) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    pilota VARCHAR(100) REFERENCES Pilota(codice_fiscale) 
+        ON DELETE RESTRICT ON UPDATE CASCADE,
     PRIMARY KEY (gara, pilota)
 );
 \end{lstlisting}
 
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Investe(
-    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale),
-    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale),
+    sponsor VARCHAR(100) REFERENCES Sponsor(ragione_sociale) 
+                         ON DELETE CASCADE ON UPDATE CASCADE,
+    scuderia VARCHAR(100) REFERENCES Scuderia(ragione_sociale) 
+                          ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (sponsor, scuderia)
 );
 \end{lstlisting}
 
+\newpage
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Penalizza(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    giro INTEGER REFERENCES Giro(id),
-    infrazione VARCHAR(100) REFERENCES Infrazione(nome),
+    giro INTEGER REFERENCES Giro(id) 
+                 ON DELETE CASCADE ON UPDATE CASCADE,
+    infrazione VARCHAR(100) REFERENCES Infrazione(nome) 
+                            ON DELETE RESTRICT ON UPDATE CASCADE,
     penalita INTEGER NOT NULL,
     CHECK (penalita > 0)
 );
@@ -964,17 +1008,20 @@ CREATE TABLE Penalizza(
 
 \begin{lstlisting}[ language=SQL ]
 CREATE TABLE Opera(
-    pitstop INTEGER REFERENCES Pitstop(giro),
-    meccanico VARCHAR(100) REFERENCES Meccanico(codice_fiscale),
+    pitstop INTEGER REFERENCES Pitstop(giro) 
+                    ON DELETE CASCADE ON UPDATE CASCADE,
+    meccanico VARCHAR(100) REFERENCES Meccanico(codice_fiscale) 
+                           ON DELETE RESTRICT ON UPDATE CASCADE,
     PRIMARY KEY (pitstop, meccanico)
 );
 \end{lstlisting}
 
 
+
 \subsection{Codifica delle operazioni}
 
 \subsubsection{Operazione 1}
-Inserire una nuova scuderia (in media 1 volta ogni cinque anni).
+Inserire una nuova scuderia.
 \begin{lstlisting}[ language=SQL ]
 INSERT INTO Scuderia (ragione_sociale, colore, nazione, anno_fondazione) VALUES
     ('<ragione sociale>', '<colore>', '<nazione>', <anno fondazione>);
@@ -982,7 +1029,7 @@ INSERT INTO Scuderia (ragione_sociale, colore, nazione, anno_fondazione) VALUES
 
 
 \subsubsection{Operazione 2}
-Inserire una nuova gara (in media 1 volta all'anno).
+Inserire una nuova gara.
 \begin{lstlisting}[ language=SQL ]
 INSERT INTO Gara (nome, data_ora, sponsor, pista) VALUES 
     ('<nome>', '<data e ora>', <sponsor o NULL>, '<nome pista>');
@@ -990,7 +1037,7 @@ INSERT INTO Gara (nome, data_ora, sponsor, pista) VALUES
 
 
 \subsubsection{Operazione 3}
-Inserire il tempo di un giro del pilota sulla pista ($\sim$1000 volte per gara).
+Inserire il tempo di un giro del pilota sulla pista.
 \begin{lstlisting}[ language=SQL ]
 INSERT INTO Giro (id, numero, tempo, gara, pilota) VALUES 
     (NULL, <numero>, <tempo>, '<nome gara>', '<codice fiscale pilota>');
@@ -998,7 +1045,7 @@ INSERT INTO Giro (id, numero, tempo, gara, pilota) VALUES
 
 
 \subsubsection{Operazione 4}
-Inserire il tempo pit stop (almeno 20 volte per gara).
+Inserire il tempo pit stop.
 \begin{lstlisting}[ language=SQL ]
 INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES 
     (<id giro>, <tempo operazione>, <tempo totale>);
@@ -1006,7 +1053,7 @@ INSERT INTO Pitstop (giro, tempo_operazione, tempo_totale) VALUES
 
 
 \subsubsection{Operazione 5}
-Inserire un nuovo contratto tra pilota e scuderia (poche volte ogni anno).
+Inserire un nuovo contratto tra pilota e scuderia.
 \begin{lstlisting}[ language=SQL ]
 INSERT INTO Contratto 
     (numero, data_inizio, data_fine, numero_pilota, pilota, scuderia, veicolo) 
@@ -1017,7 +1064,7 @@ VALUES
 
 
 \subsubsection{Operazione 6}
-Incrementare la potenza e la velocità massima dei veicoli di una data scuderia (in media 2 volte all'anno).
+Incrementare la potenza e la velocità massima dei veicoli di una data scuderia.
 \begin{lstlisting}[ language=SQL ]
 UPDATE Veicolo
 SET potenza = potenza + 50,
@@ -1027,7 +1074,7 @@ WHERE Veicolo.scuderia = '<Ragione sociale scuderia>';
 
 
 \subsubsection{Operazione 7}
-Visualizzare la lunghezza media, massima e minima delle piste (1 volta all'anno).
+Visualizzare la lunghezza media, massima e minima delle piste.
 \begin{lstlisting}[ language=SQL ]
 SELECT AVG(lunghezza) AS Media, MAX(lunghezza) AS Massimo, MIN(lunghezza) AS Minimo
 FROM Pista;
@@ -1044,7 +1091,7 @@ FROM Pista;
 
 
 \subsubsection{Operazione 8}
-Visualizzare lo sponsor di una gara (1 volta per gara).
+Visualizzare lo sponsor di una gara.
 \begin{lstlisting}[ language=SQL ]
 SELECT S.*
 FROM Gara AS G INNER JOIN Sponsor AS S ON G.sponsor = S.ragione_sociale
@@ -1062,7 +1109,7 @@ WHERE G.nome = '<Nome gara>';
 
 
 \subsubsection{Operazione 9}
-Visualizzare lo sponsor più presente (1 volta all'anno).
+Visualizzare lo sponsor più presente.
 \begin{lstlisting}[ language=SQL ]
 SELECT sponsor.ragione_sociale, COUNT(*) AS num_comparse
 FROM (SELECT Investe.sponsor AS ragione_sociale FROM Investe 
@@ -1094,7 +1141,7 @@ HAVING num_comparse = (
 
 
 \subsubsection{Operazione 10}
-Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data (2 volte all'anno).
+Visualizzare la scuderia con cui un pilota ha un contratto in una determinata data.
 \begin{lstlisting}[ language=SQL ]
 SELECT C.scuderia
 FROM Contratto AS C
@@ -1113,7 +1160,7 @@ WHERE ('<Data>' BETWEEN C.data_inizio AND C.data_fine) AND
 
 
 \subsubsection{Operazione 11}
-Visualizzare nome, cognome e numero di gara dei piloti di una data scuderia con contratto attivo al momento attuale (2 volte all'anno).
+Visualizzare nome, cognome e numero di gara dei piloti di una data scuderia con contratto attivo al momento attuale.
 \begin{lstlisting}[ language=SQL ]
 SELECT P.cognome, P.nome, C.numero_pilota
 FROM Contratto AS C INNER JOIN Scuderia AS S ON C.scuderia = S.ragione_sociale 
@@ -1134,7 +1181,7 @@ WHERE S.ragione_sociale = '<Ragione sociale scuderia>' AND
 
 
 \subsubsection{Operazione 12}
-Visualizzare i piloti e la scuderia con cui gareggiano per una data gara raggruppandoli per scuderia (3 volte per gara).
+Visualizzare i piloti e la scuderia con cui gareggiano per una data gara raggruppandoli per scuderia.
 \begin{lstlisting}[ language=SQL ]
 SELECT D.nome, D.cognome, C.scuderia
 FROM Partecipa AS P INNER JOIN Pilota AS D ON P.pilota = D.codice_fiscale
@@ -1175,7 +1222,7 @@ ORDER BY C.scuderia;
 
 
 \subsubsection{Operazione 13}
-Visualizzare il tempo reale di un giro ($\sim$1000 volte per gara).
+Visualizzare il tempo reale di un giro.
 \begin{lstlisting}[ language=SQL ]
 CREATE VIEW IF NOT EXISTS GiroReale AS
 SELECT Giro.id, Giro.pilota, Giro.gara, Giro.numero, 
@@ -1207,8 +1254,9 @@ SELECT * FROM GiroReale;
 \end{center}
 
 
+\newpage
 \subsubsection{Operazione 14}
-Visualizzare il pilota con il tempo migliore su una data pista (1 volta per gara).
+Visualizzare il pilota con il tempo migliore su una data pista.
 \begin{lstlisting}[ language=SQL ]
 SELECT Pilota.nome, Pilota.cognome, GiroReale.tempo_totale
 FROM GiroReale INNER JOIN Gara ON GiroReale.gara = Gara.nome
@@ -1232,7 +1280,7 @@ WHERE Gara.pista = '<Nome pista>' AND
 
 
 \subsubsection{Operazione 15}
-Visualizzare la classifica (finale o temporanea) di una data gara ($\sim$50 volte per gara).
+Visualizzare la classifica (finale o temporanea) di una data gara.
 \begin{lstlisting}[ language=SQL ]
 SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia, COUNT(GiroReale.id) AS num_giri, 
        SUM(GiroReale.tempo_totale) AS tempo_gara
@@ -1275,7 +1323,7 @@ ORDER BY num_giri DESC, tempo_gara ASC;
 
 
 \subsubsection{Operazione 16}
-Visualizzare i vincitori di una gara (1 volta per gara).
+Visualizzare i vincitori di una gara.
 \begin{lstlisting}[ language=SQL ]
 SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia
 FROM GiroReale INNER JOIN Pilota ON GiroReale.pilota = Pilota.codice_fiscale
@@ -1307,7 +1355,7 @@ ORDER BY COUNT(GiroReale.id) DESC, SUM(GiroReale.tempo_totale) ASC;
 
 
 \subsubsection{Operazione 17}
-Visualizzare in ordine decrescente i piloti e il loro numero di vittorie (1 volta per gara).
+Visualizzare in ordine decrescente i piloti e il loro numero di vittorie.
 \begin{lstlisting}[ language=SQL ]
 CREATE VIEW IF NOT EXISTS Vincitore AS
 SELECT Pilota.nome, Pilota.cognome, Pilota.codice_fiscale, 
@@ -1362,7 +1410,7 @@ SELECT * FROM Vincitore;
 
 
 \subsubsection{Operazione 18}
-Visualizzare il pilota più giovane ad aver vinto almeno una gara (1 volta per gara).
+Visualizzare il pilota più giovane ad aver vinto almeno una gara.
 \begin{lstlisting}[ language=SQL ]
 SELECT Pilota.nome, Pilota.cognome, Pilota.data_nascita
 FROM Vincitore INNER JOIN Pilota ON Vincitore.codice_fiscale = Pilota.codice_fiscale
@@ -1385,7 +1433,7 @@ WHERE Vincitore.vittorie > 0 AND
 
 
 \subsubsection{Operazione 19}
-Visualizzare pilota e scuderia con il pitstop più veloce (1 volta per gara).
+Visualizzare pilota e scuderia con il pitstop più veloce.
 \begin{lstlisting}[ language=SQL ]
 SELECT Pilota.nome, Pilota.cognome, Contratto.scuderia, Pitstop.tempo_operazione, 
        Gara.nome AS nome_gara
@@ -1409,7 +1457,7 @@ WHERE (Gara.data_ora BETWEEN Contratto.data_inizio AND Contratto.data_fine) AND
 
 
 \subsubsection{Operazione 20}
-Visualizzare il supervisore che ha effettuato il maggior numero di controlli con esito negativo (poche volte all'anno).
+Visualizzare il supervisore che ha effettuato il maggior numero di controlli con esito negativo.
 \begin{lstlisting}[ language=SQL ]
 SELECT S.nome, S.cognome, S.codice_fiscale
 FROM Supervisore AS S INNER JOIN Controllo AS C ON S.codice_fiscale = C.supervisore
@@ -1433,7 +1481,7 @@ HAVING COUNT(*) = (SELECT COUNT(*)
 
 
 \subsubsection{Operazione 21}
-Visualizzare la scuderia e l'auto che ha avuto il maggior numero di controlli con esito negativo (poche volte all'anno).
+Visualizzare la scuderia e l'auto che ha avuto il maggior numero di controlli con esito negativo.
 \begin{lstlisting}[ language=SQL ]
 SELECT Veicolo.nome, Veicolo.scuderia
 FROM Veicolo INNER JOIN Controllo ON Veicolo.id = Controllo.veicolo
